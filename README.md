@@ -2,7 +2,7 @@
 
 A relatively decent JSON parser I wrote in a single day.
 
-Can parse some malformed JSON
+Is able to parse some types of malformed JSON
 
 # Parser
 
