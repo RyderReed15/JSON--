@@ -187,10 +187,13 @@ JsonObject* ParseJsonObject(std::istream& fJson) {
             std::getline(fJson, line, '\"');
             pValue = ParseJsonValue(fJson, line);
             if (!pValue->m_szName.compare("")) {
-                pObject->m_mValues[std::to_string((int)pValue)] = pValue;
+
+                pObject->m_mValues[std::to_string((int)pValue)] = pObject->m_vValues.size();
+                pObject->m_vValues.push_back(pValue);
             }
             else {
-                pObject->m_mValues[pValue->m_szName] = pValue;
+                pObject->m_mValues[pValue->m_szName] = pObject->m_vValues.size();
+                pObject->m_vValues.push_back(pValue);
             }
 
 
@@ -210,10 +213,12 @@ JsonObject* ParseJsonObject(std::istream& fJson) {
             if (pValue->m_pObject->m_szName.compare("")) {
                 pValue->m_szName = pValue->m_pObject->m_szName;
 
-                pObject->m_mValues[pValue->m_szName] = pValue;
+                pObject->m_mValues[pValue->m_szName] = pObject->m_vValues.size();
+                pObject->m_vValues.push_back(pValue);
             }
             else {
-                pObject->m_mValues[std::to_string((int)pValue)] = pValue;
+                pObject->m_mValues[std::to_string((int)pValue)] = pObject->m_vValues.size();
+                pObject->m_vValues.push_back(pValue);
 
             }
             break;
@@ -332,21 +337,19 @@ bool WriteJsonObject(std::ostream& fJson, JsonObject* pJsonObject, const std::st
             fJson << indent << "{\n";
         }
 
-        std::unordered_map<std::string, JsonValue*>::iterator iterator = pJsonObject->m_mValues.begin();
-        while (true) {
-            if (!WriteJsonValue(fJson, iterator->second, indent + chIndent)) {
-                iterator++;
-                if (iterator == pJsonObject->m_mValues.end()) {
+        for (int i = 0; i < pJsonObject->m_vValues.size(); i++) {
+            if (!WriteJsonValue(fJson, pJsonObject->m_vValues[i], indent + chIndent)) {
+                if (i == pJsonObject->m_vValues.size() - 1) {
                     break;
                 }
                 continue;
             }
-            iterator++;
-            if (iterator == pJsonObject->m_mValues.end()) {
+            if (i == pJsonObject->m_vValues.size() - 1) {
                 break;
             }
             fJson << ",\n";
         }
+        
         fJson << "\n" << indent << "}";
         return true;
     }
