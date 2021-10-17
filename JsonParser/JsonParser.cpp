@@ -1,8 +1,8 @@
 #include "JsonParser.h"
 
 
-void        StringToLower(std::string& szUpper);
-char        EscapeCharacter(std::istream& fJson, char chEscape);
+void        StringToLower   (std::string& szUpper);
+char        EscapeCharacter (std::istream& fJson, char chEscape);
 
 JsonObject* ParseJsonFile(const char* szPath) {
     std::ifstream fJson;
@@ -389,5 +389,6 @@ void StringToLower(std::string& szUpper) {
     }
 
 }
+
 
 

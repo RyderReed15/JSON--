@@ -1,14 +1,19 @@
 #pragma once
+
+#ifndef JSON_PARSER_H
+#define JSON_PARSER_H
+
 #include "JsonValue.h"
 #include "JsonObject.h"
 #include "JsonArray.h"
 
-#include <string>
-#include <unordered_map>
-#include <iomanip>
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <iomanip>
 
 const char* chIndent = "\t";
 
@@ -26,3 +31,6 @@ std::string     WriteJsonString (JsonObject* pJsonObject);
 bool            WriteValue      (std::ostream& fJson, JsonValue* pValue, const std::string& indent = "");
 bool            WriteJsonArray  (std::ostream& fJson, JsonArray* pArray, const std::string& indent = "");
 bool            WriteJsonObject (std::ostream& fJson, JsonObject* pJsonObject, const std::string& indent = "");
+
+
+#endif // !JSON_PARSER_H
