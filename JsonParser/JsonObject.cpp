@@ -36,9 +36,8 @@ bool JsonObject::SetNumber(const std::string& szName, const double num) {
         pValue->m_dbValue = num;
         m_mValues[szName] = m_vValues.size();
         m_vValues.push_back(pValue);
-        return true;
+        return pValue;
     }
-    return false;
 }
 
 bool JsonObject::GetBoolean(const std::string& szName) {
@@ -61,9 +60,8 @@ bool JsonObject::SetBoolean(const std::string& szName, const bool bValue) {
         pValue->m_bValue = bValue;
         m_mValues[szName] = m_vValues.size();
         m_vValues.push_back(pValue);
-        return true;
+        return pValue;
     }
-    return false;
 }
 
 std::string JsonObject::GetString(const std::string& szName) {
@@ -86,9 +84,8 @@ bool JsonObject::SetString(const std::string& szName, const std::string& szValue
         pValue->m_szValue = std::string(szValue);
         m_mValues[szName] = m_vValues.size();
         m_vValues.push_back(pValue);
-        return true;
+        return pValue;
     }
-    return false;
 }
 
 JsonObject* JsonObject::GetJsonObject(const std::string& szName) {
@@ -111,9 +108,8 @@ bool JsonObject::SetJsonObject(const std::string& szName, JsonObject* pObject) {
         pValue->m_pObject = pObject;
         m_mValues[szName] = m_vValues.size();
         m_vValues.push_back(pValue);
-        return true;
+        return pValue;
     }
-    return false;
 }
 
 JsonArray* JsonObject::GetJsonArray(const std::string& szName) {
@@ -136,9 +132,8 @@ bool JsonObject::SetJsonArray(const std::string& szName, JsonArray* pArray) {
         pValue->m_pArray = pArray;
         m_mValues[szName] = m_vValues.size();
         m_vValues.push_back(pValue);
-        return true;
+        return pValue;
     }
-    return false;
 }
 
 void JsonObject::RemoveValue(const std::string& szName) {
