@@ -27,6 +27,8 @@ public:
                             JsonValue   (const JsonValue& copyValue);
                             ~JsonValue  (void);
 
+    void                    DeepDelete();
+
     JsonValue               operator=   (const JsonValue& rhs);
     bool                    operator==  (const JsonValue& rhs);
     friend std::ostream&    operator<<  (std::ostream& out, const JsonValue& rhs);
@@ -37,11 +39,12 @@ public:
     union {
         bool        m_bValue;
         double      m_dbValue;
-        std::string m_szValue;
         JsonObject* m_pObject;
         JsonArray*  m_pArray;
 
     };
+
+    std::string m_szValue = "";
 
 };
 

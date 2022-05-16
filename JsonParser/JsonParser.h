@@ -15,14 +15,14 @@
 #include <unordered_map>
 #include <iomanip>
 
-const char* chIndent = "\t"; // Indent string
+
 
 //Parses the json file and returns a JsonObject holding the parsed values - delete the object before exiting
 JsonObject*     ParseJsonString (const std::string& szJson);
 //Parses the json string and returns a JsonObject holding the parsed values - delete the object before exiting
 JsonObject*     ParseJsonFile   (const char* szPath);
 //Helper to decide which value to parse as
-JsonValue*      ParseJsonValue  (std::istream& fJson, const std::string& szName);
+JsonValue      ParseJsonValue  (std::istream& fJson, const std::string& szName);
 bool            ParseBool       (std::istream& fJson, char chPrev);
 double          ParseNumber     (std::istream& fJson, char chPrev);
 std::string     ParseString     (std::istream& fJson, char chDelim);

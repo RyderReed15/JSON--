@@ -3,11 +3,12 @@
 JsonValue::JsonValue() {
     m_szName = "";
     m_tType = VALUE_TYPE::INVALID;
+    m_szValue = "";
 
 }
 
 JsonValue::JsonValue(const JsonValue& copyValue) {
-    m_szName = std::string(copyValue.m_szName);
+    m_szName = copyValue.m_szName.c_str();
     m_tType = copyValue.m_tType;
     switch (m_tType) {
     case VALUE_TYPE::BOOL:
@@ -17,19 +18,46 @@ JsonValue::JsonValue(const JsonValue& copyValue) {
         m_dbValue = copyValue.m_dbValue;
         break;
     case VALUE_TYPE::STRING:
-        m_szValue = std::string(copyValue.m_szValue);
-        break;
-    case VALUE_TYPE::ARRAY:
-        m_pObject = new JsonObject(*copyValue.m_pObject);
+        m_szValue = copyValue.m_szValue.c_str();
         break;
     case VALUE_TYPE::OBJECT:
-        m_pArray = new JsonArray(*copyValue.m_pArray);
+        m_pObject = copyValue.m_pObject;
+        break;
+    case VALUE_TYPE::ARRAY:
+        m_pArray = copyValue.m_pArray;
         break;
     }
 
 }
 
 JsonValue::~JsonValue() {
+    //Not necessary to prevent leaks but otherwise the strings are not deallocated until the end of the program
+    //m_szName.~basic_string();
+    m_szName.clear();
+    switch (m_tType) {
+    case VALUE_TYPE::ARRAY:
+        //delete m_pArray;
+        break;
+    case VALUE_TYPE::OBJECT:
+        //delete m_pObject;
+        break;
+    case VALUE_TYPE::STRING:   
+        m_szValue.clear();
+        //m_szValue.~basic_string();
+        break;
+    default:
+        break;
+    }
+
+
+
+}
+
+void JsonValue::DeepDelete()
+{
+    //Not necessary to prevent leaks but otherwise the strings are not deallocated until the end of the program
+    //m_szName.~basic_string();
+    m_szName.clear();
     switch (m_tType) {
     case VALUE_TYPE::ARRAY:
         delete m_pArray;
@@ -37,12 +65,13 @@ JsonValue::~JsonValue() {
     case VALUE_TYPE::OBJECT:
         delete m_pObject;
         break;
+    case VALUE_TYPE::STRING:
+        m_szValue.clear();
+        //m_szValue.~basic_string();
+        break;
     default:
         break;
     }
-
-    m_szName.clear();
-
 
 }
 
@@ -60,16 +89,16 @@ JsonValue JsonValue::operator=(const JsonValue& rhs) {
     case VALUE_TYPE::STRING:
         m_szValue = "";
         break;
-    case VALUE_TYPE::ARRAY:
-        delete m_pObject;
+    case VALUE_TYPE::OBJECT:
+        //delete m_pObject;
         m_pObject = nullptr;;
         break;
-    case VALUE_TYPE::OBJECT:
-        delete m_pArray;
+    case VALUE_TYPE::ARRAY:
+        //delete m_pArray;
         m_pArray = nullptr;;
         break;
     }
-    m_szName = std::string(rhs.m_szName);
+    m_szName = rhs.m_szName.c_str();
     m_tType = rhs.m_tType;
     switch (m_tType) {
     case VALUE_TYPE::BOOL:
@@ -79,13 +108,13 @@ JsonValue JsonValue::operator=(const JsonValue& rhs) {
         m_dbValue = rhs.m_dbValue;
         break;
     case VALUE_TYPE::STRING:
-        m_szValue = std::string(rhs.m_szValue);
-        break;
-    case VALUE_TYPE::ARRAY:
-        m_pObject = new JsonObject(*rhs.m_pObject);
+        m_szValue = rhs.m_szValue.c_str();
         break;
     case VALUE_TYPE::OBJECT:
-        m_pArray = new JsonArray(*rhs.m_pArray);
+        m_pObject = rhs.m_pObject;
+        break;
+    case VALUE_TYPE::ARRAY:
+        m_pArray = rhs.m_pArray;
         break;
     }
     return *this;

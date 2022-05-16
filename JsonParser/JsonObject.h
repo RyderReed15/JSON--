@@ -8,6 +8,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 class JsonArray;
 class JsonValue;
@@ -43,7 +44,7 @@ public:
 
     JsonObject  operator=       (JsonObject& rhs);
 
-    std::vector<JsonValue*>                 m_vValues;
+    std::vector<JsonValue>                  m_vValues;
     std::unordered_map<std::string, int>    m_mValues;
     std::string                             m_szName;
 
@@ -56,9 +57,9 @@ template <typename T>
 T JsonObject::GetNumber(const std::string& szName) {
     if (!this) return (T)0;
     if (!m_mValues.count(szName)) return (T)0;
-    JsonValue* pValue = m_vValues[m_mValues[szName]];
-    if (pValue && pValue->m_tType == VALUE_TYPE::NUMBER) {
-        return (T)m_vValues[m_mValues[szName]]->m_dbValue;;
+    JsonValue pValue = m_vValues[m_mValues[szName]];
+    if (pValue.m_tType == VALUE_TYPE::NUMBER) {
+        return (T)m_vValues[m_mValues[szName]].m_dbValue;;
     }
     return 0;
 }
