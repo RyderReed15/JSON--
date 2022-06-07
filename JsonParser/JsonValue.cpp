@@ -69,6 +69,7 @@ void JsonValue::DeepDelete()
         m_szValue.clear();
         //m_szValue.~basic_string();
         break;
+
     default:
         break;
     }
@@ -81,7 +82,7 @@ JsonValue JsonValue::operator=(const JsonValue& rhs) {
     }
     switch (m_tType) {
     case VALUE_TYPE::BOOL:
-        m_bValue = 0;
+        m_bValue = false;
         break;
     case VALUE_TYPE::NUMBER:
         m_dbValue = 0;
@@ -97,6 +98,8 @@ JsonValue JsonValue::operator=(const JsonValue& rhs) {
         //delete m_pArray;
         m_pArray = nullptr;;
         break;
+    default:
+        m_bValue = false;
     }
     m_szName = rhs.m_szName.c_str();
     m_tType = rhs.m_tType;
@@ -116,6 +119,8 @@ JsonValue JsonValue::operator=(const JsonValue& rhs) {
     case VALUE_TYPE::ARRAY:
         m_pArray = rhs.m_pArray;
         break;
+    default:
+        m_bValue = false;
     }
     return *this;
 }
@@ -138,6 +143,8 @@ bool JsonValue::operator== (const JsonValue& rhs) {
             return m_pArray == rhs.m_pArray;
         case VALUE_TYPE::OBJECT:
             return m_pObject == rhs.m_pObject;
+        case VALUE_TYPE::NULLTYPE:
+            return m_bValue == false;
         default:
             return true;
         }
@@ -156,20 +163,22 @@ std::ostream& operator<< (std::ostream& out, const JsonValue& rhs) {
         out << "\"" << rhs.m_szName << "\": " << (rhs.m_bValue ? "true" : "false");
         break;
     case VALUE_TYPE::NUMBER:
-        if ((int)rhs.m_dbValue == rhs.m_dbValue) {
+        if (floor(rhs.m_dbValue) == rhs.m_dbValue) {
             out << "\"" << rhs.m_szName << "\": " << std::fixed << std::setprecision(0) << rhs.m_dbValue;
             break;
         }
         out << "\"" << rhs.m_szName << "\": " << std::fixed << std::setprecision(5) << rhs.m_dbValue;
         break;
     case VALUE_TYPE::STRING:
-        for (int i = 0; i < rhs.m_szValue.size(); i++) {
+        for (size_t i = 0; i < rhs.m_szValue.size(); i++) {
             newString += UnEscapeCharacter(rhs.m_szValue[i]);
         }
         out << "\"" << rhs.m_szName << "\": " << "\"" << newString << "\"";
         break;
     case VALUE_TYPE::NULLTYPE:
         out << "\"" << rhs.m_szName << "\": " << "null";
+        break;
+    default:
         break;
     }
     return out;

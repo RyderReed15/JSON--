@@ -5,22 +5,56 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JsonParser", "JsonParser\JsonParser.vcxproj", "{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JsonParserLinux", "JsonParserLinux\JsonParserLinux.vcxproj", "{F0197968-A298-4EC2-8898-B60BCD783208}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Debug|ARM.ActiveCfg = Debug|Win32
+		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Debug|ARM64.ActiveCfg = Debug|Win32
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Debug|x64.ActiveCfg = Debug|x64
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Debug|x64.Build.0 = Debug|x64
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Debug|x86.ActiveCfg = Debug|Win32
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Debug|x86.Build.0 = Debug|Win32
+		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Release|ARM.ActiveCfg = Release|Win32
+		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Release|ARM64.ActiveCfg = Release|Win32
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Release|x64.ActiveCfg = Release|x64
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Release|x64.Build.0 = Release|x64
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Release|x86.ActiveCfg = Release|Win32
 		{E35CF102-2ADE-462A-A9F0-BC6B933C2A28}.Release|x86.Build.0 = Release|Win32
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|ARM.Build.0 = Debug|ARM
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|x64.ActiveCfg = Debug|x64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|x64.Build.0 = Debug|x64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|x64.Deploy.0 = Debug|x64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|x86.ActiveCfg = Debug|x86
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|x86.Build.0 = Debug|x86
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Debug|x86.Deploy.0 = Debug|x86
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|ARM.ActiveCfg = Release|ARM
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|ARM.Build.0 = Release|ARM
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|ARM.Deploy.0 = Release|ARM
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|ARM64.Build.0 = Release|ARM64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|ARM64.Deploy.0 = Release|ARM64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|x64.ActiveCfg = Release|x64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|x64.Build.0 = Release|x64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|x64.Deploy.0 = Release|x64
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|x86.ActiveCfg = Release|x86
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|x86.Build.0 = Release|x86
+		{F0197968-A298-4EC2-8898-B60BCD783208}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

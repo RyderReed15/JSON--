@@ -7,14 +7,14 @@ JsonArray::JsonArray() {
 
 JsonArray::JsonArray(const JsonArray& copyArray) {
     m_szName = copyArray.m_szName.c_str();
-    for (int i = 0; i < copyArray.m_vValues.size(); i++) {
+    for (size_t i = 0; i < copyArray.m_vValues.size(); i++) {
         m_vValues.push_back( m_vValues[i]);
     }
 }
 
 JsonArray::~JsonArray() {
 
-    for (int i = 0; i < m_vValues.size(); i++) {
+    for (size_t i = 0; i < m_vValues.size(); i++) {
         m_vValues[i].DeepDelete();
     }
     m_vValues.clear();
@@ -22,203 +22,164 @@ JsonArray::~JsonArray() {
     m_szName.clear();
 }
 
-bool JsonArray::SetNumber(int index, const double num) {
-    if (!this) return false;
-
-    if (index >= 0 && index < m_vValues.size()) {
+bool JsonArray::SetNumber(size_t index, const double num) {
+    if (index < m_vValues.size()) {
         m_vValues[index].m_dbValue = num;
         return true;
     }
-
-    
+  
     return false;
 }
-int JsonArray::AddNumber(const double num, int index) {
-    if (!this) return -1;
+size_t JsonArray::AddNumber(const double num, size_t index) {
     JsonValue pValue = JsonValue();
     pValue.m_tType = VALUE_TYPE::NUMBER;
     pValue.m_dbValue = num;
-    if (index == -1) {
-        m_vValues.push_back(pValue);
-        return m_vValues.size() - 1;
+    
+    if (index > m_vValues.size()) {
+        index = m_vValues.size();
     }
-    else {
-        std::vector<JsonValue>::iterator it = m_vValues.begin();
-        if (index > m_vValues.size()) {
-            index = m_vValues.size();
-        }
-        m_vValues.insert(it + index, pValue);
-        return index;
-    }
+    m_vValues.insert(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index), pValue);
+    return index;
+    
 
 
 }
 
-bool JsonArray::GetBoolean(int index) const {
-    if (!this) return false;
-    if (index >= 0 && index < m_vValues.size()) {
+bool JsonArray::GetBoolean(size_t index) const {
+    if (index < m_vValues.size()) {
         if (m_vValues[index].m_tType == VALUE_TYPE::BOOL) return m_vValues[index].m_bValue;
     }
     return false;
 }
-bool JsonArray::SetBoolean(int index, const bool bValue) {
-    if (!this) return false;
-    if (index >= 0 && index < m_vValues.size()) {
+bool JsonArray::SetBoolean(size_t index, const bool bValue) {
+    if (index < m_vValues.size()) {
         m_vValues[index].m_tType = VALUE_TYPE::BOOL;
         m_vValues[index].m_bValue = bValue;
         return true;
     }
     return false;
 }
-int JsonArray::AddBoolean(const bool bValue, int index) {
-    if (!this) return -1;
+size_t JsonArray::AddBoolean(const bool bValue, size_t index) {
     JsonValue pValue = JsonValue();
     pValue.m_tType = VALUE_TYPE::BOOL;
     pValue.m_bValue = bValue;
-    if (index == -1) {
-        m_vValues.push_back(pValue);
-        return m_vValues.size() - 1;
+    
+    
+    if (index > m_vValues.size()) {
+        index = m_vValues.size();
     }
-    else {
-        std::vector<JsonValue>::iterator it = m_vValues.begin();
-        if (index > m_vValues.size()) {
-            index = m_vValues.size();
-        }
-        m_vValues.insert(it + index, pValue);
-        return index;
-    }
+    m_vValues.insert(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index), pValue);
+    return index;
+    
 
 
 }
 
-std::string JsonArray::GetString(int index) const {
-    if (!this) return "";
-    if (index >= 0 && index < m_vValues.size()) {
+std::string JsonArray::GetString(size_t index) const {
+    if (index < m_vValues.size()) {
         if (m_vValues[index].m_tType == VALUE_TYPE::STRING) return m_vValues[index].m_szValue;
     }
     return "";
 }
-bool JsonArray::SetString(int index, const std::string& szValue) {
-    if (!this) return false;
-    if (index >= 0 && index < m_vValues.size()) {
+bool JsonArray::SetString(size_t index, const std::string& szValue) {
+    if (index < m_vValues.size()) {
         m_vValues[index].m_tType = VALUE_TYPE::STRING;
         m_vValues[index].m_szValue = szValue;
         return true;
     }
     return false;
 }
-int JsonArray::AddString(const std::string& szValue, int index) {
-    if (!this) return -1;
+size_t JsonArray::AddString(const std::string& szValue, size_t index) {
     JsonValue pValue = JsonValue();
     pValue.m_tType = VALUE_TYPE::STRING;
     pValue.m_szValue = szValue.c_str();
-    if (index == -1) {
-        m_vValues.push_back(pValue);
-        return m_vValues.size() - 1;
+    
+    
+    if (index > m_vValues.size()) {
+        index = m_vValues.size();
     }
-    else {
-        std::vector<JsonValue>::iterator it = m_vValues.begin();
-        if (index > m_vValues.size()) {
-            index = m_vValues.size();
-        }
-        m_vValues.insert(it + index, pValue);
-        return index;
-    }
+    m_vValues.insert(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index), pValue);
+    return index;
+    
 
 
 }
 
-JsonObject* JsonArray::GetJsonObject(int index) const {
-    if (!this) return nullptr;
-    if (index >= 0 && index < m_vValues.size()) {
+JsonObject* JsonArray::GetJsonObject(size_t index) const {
+    if (index < m_vValues.size()) {
         if (m_vValues[index].m_tType == VALUE_TYPE::OBJECT) return m_vValues[index].m_pObject;
     }
     return nullptr;
 }
-bool JsonArray::SetJsonObject(int index, JsonObject* pObject) {
-    if (!this) return false;
-    if (index >= 0 && index < m_vValues.size()) {
+bool JsonArray::SetJsonObject(size_t index, JsonObject* pObject) {
+    if (index < m_vValues.size()) {
         m_vValues[index].m_tType = VALUE_TYPE::OBJECT;
         m_vValues[index].m_pObject = pObject;
         return true;
     }
     return false;
 }
-int JsonArray::AddJsonObject(JsonObject* pObject, int index) {
-    if (!this) return -1;
+size_t JsonArray::AddJsonObject(JsonObject* pObject, size_t index) {
     if (pObject) {
         JsonValue pValue = JsonValue();
         pValue.m_szName = pObject->m_szName;
         pValue.m_tType = VALUE_TYPE::OBJECT;
         pValue.m_pObject = pObject;
-        if (index == -1) {
-            m_vValues.push_back(pValue);
-            return m_vValues.size() - 1;
+       
+        
+        
+        if (index > m_vValues.size()) {
+            index = m_vValues.size();
         }
-        else {
-            std::vector<JsonValue>::iterator it = m_vValues.begin();
-            if (index > m_vValues.size()) {
-                index = m_vValues.size();
-            }
-            m_vValues.insert(it + index, pValue);
-            return index;
-        }
+        m_vValues.insert(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index), pValue);
+        return index;
+        
     }
-    return -1;
+    return SIZE_MAX;
 }
 
 
-JsonArray* JsonArray::GetJsonArray(int index) const {
-    if (!this) return nullptr;
-    if (index >= 0 && index < m_vValues.size()) {
+JsonArray* JsonArray::GetJsonArray(size_t index) const {
+    if (index < m_vValues.size()) {
         if (m_vValues[index].m_tType == VALUE_TYPE::ARRAY) return m_vValues[index].m_pArray;
     }
     return nullptr;
 }
-bool JsonArray::SetJsonArray(int index, JsonArray* pArray) {
-    if (!this) return false;
-    if (index >= 0 && index < m_vValues.size()) {
+bool JsonArray::SetJsonArray(size_t index, JsonArray* pArray) {
+    if (index < m_vValues.size()) {
         m_vValues[index].m_tType = VALUE_TYPE::ARRAY;
         m_vValues[index].m_pArray = pArray;
         return true;
     }
     return false;
 }
-int JsonArray::AddJsonArray(JsonArray* pArray, int index) {
-    if (!this) return -1;
+size_t JsonArray::AddJsonArray(JsonArray* pArray, size_t index) {
     if (pArray) {
         JsonValue pValue = JsonValue();
         pValue.m_szName = pArray->m_szName;
         pValue.m_tType = VALUE_TYPE::ARRAY;
         pValue.m_pArray = pArray;
-        if (index == -1) {
-            m_vValues.push_back(pValue);
-            return m_vValues.size() - 1;
+       
+        
+        if (index > m_vValues.size()) {
+            index = m_vValues.size();
         }
-        else {
-            std::vector<JsonValue>::iterator it = m_vValues.begin();
-            if (index > m_vValues.size()) {
-                index = m_vValues.size();
-            }
-            m_vValues.insert(it + index, pValue);
-            return index;
-        }
+        m_vValues.insert(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index), pValue);
+        return index;
+       
     }
-    return -1;
+    return SIZE_MAX;
 
 }
 
-void JsonArray::RemoveValue(int index) {
-    if (!this) return;
-    if (index >= 0 && index < m_vValues.size()) {
-        std::vector<JsonValue>::iterator it = m_vValues.begin();
-        m_vValues.erase(it + index);
+void JsonArray::RemoveValue(size_t index) {
+    if (index < m_vValues.size()) {
+        m_vValues.erase(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index));
     }
 
 }
 
-int JsonArray::GetSize() {
-    if (!this) return 0;
+size_t JsonArray::GetSize() {
     return m_vValues.size();
 }
 
@@ -229,13 +190,13 @@ JsonArray JsonArray::operator= (const JsonArray& rhs) {
     m_szName = "";
 
     m_vValues.clear();
-    for (int i = 0; i < rhs.m_vValues.size(); i++) {
+    for (size_t i = 0; i < rhs.m_vValues.size(); i++) {
         m_vValues.push_back(rhs.m_vValues[i]);
     }
     return *this;
 }
 
-JsonValue& JsonArray::operator[](int index) {
+JsonValue& JsonArray::operator[](size_t index) {
 
     return m_vValues[index];
 }

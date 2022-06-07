@@ -4,6 +4,7 @@
 #include <string>
 #include <iomanip>
 #include <iostream>
+#include <math.h>
 
 
 
@@ -34,7 +35,9 @@ public:
     bool                    operator==  (const JsonValue& rhs);
     friend std::ostream&    operator<<  (std::ostream& out, const JsonValue& rhs);
 
-    std::string     m_szName;
+
+    
+
     VALUE_TYPE      m_tType;
 
     union {
@@ -45,8 +48,10 @@ public:
 
     };
 
-    std::string m_szValue = "";
+    std::string     m_szName;
+    std::string     m_szValue = "";
 
+   
 };
 
 // Takes an unescaped character and converts it to the escaped version
