@@ -5,48 +5,48 @@
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - Lib|ARM">
-      <Configuration>ReleaseLinux - Lib</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Static|ARM">
+      <Configuration>ReleaseLinux - Static</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - Lib|ARM64">
-      <Configuration>ReleaseLinux - Lib</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Static|ARM64">
+      <Configuration>ReleaseLinux - Static</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - Lib|x64">
-      <Configuration>ReleaseLinux - Lib</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Static|x64">
+      <Configuration>ReleaseLinux - Static</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - Lib|x86">
-      <Configuration>ReleaseLinux - Lib</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Static|x86">
+      <Configuration>ReleaseLinux - Static</Configuration>
       <Platform>x86</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - DLL|ARM">
-      <Configuration>ReleaseLinux - DLL</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Dynamic|ARM">
+      <Configuration>ReleaseLinux - Dynamic</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - DLL|ARM64">
-      <Configuration>ReleaseLinux - DLL</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Dynamic|ARM64">
+      <Configuration>ReleaseLinux - Dynamic</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x86">
       <Configuration>Debug</Configuration>
       <Platform>x86</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - DLL|x86">
-      <Configuration>ReleaseLinux - DLL</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Dynamic|x86">
+      <Configuration>ReleaseLinux - Dynamic</Configuration>
       <Platform>x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseLinux - DLL|x64">
-      <Configuration>ReleaseLinux - DLL</Configuration>
+    <ProjectConfiguration Include="ReleaseLinux - Dynamic|x64">
+      <Configuration>ReleaseLinux - Dynamic</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -64,41 +64,41 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|ARM'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|ARM'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|x86'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x86'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|x86'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x86'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|ARM64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|ARM64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
@@ -110,28 +110,28 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|ARM'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|ARM64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM64'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x64'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x86'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|ARM'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|ARM64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM64'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x64'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x86'">
     <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
   </PropertyGroup>
   <ItemGroup>
@@ -146,49 +146,49 @@
     <ClInclude Include="..\JsonParser\JsonParser.h" />
     <ClInclude Include="..\JsonParser\JsonValue.h" />
   </ItemGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|ARM'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|ARM'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|ARM64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM64'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|ARM64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM64'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x64'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x64'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - DLL|x86'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x86'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Lib|x86'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x86'">
     <Link />
     <ClCompile>
       <AdditionalOptions>-fpermissive %(AdditionalOptions)</AdditionalOptions>
