@@ -18,8 +18,20 @@ JsonObject* ParseJsonFile(const char* szPath) {
             return pJsonFile;
         }
         else {
-            JsonObject* pJsonFile = ParseJsonObject(fJson);
-            return pJsonFile;
+            if (chFirst == '\"') {
+                std::string line;
+                std::string temp;
+                std::getline(fJson, line, '\"');
+                std::getline(fJson, temp, '{');
+                JsonObject* pJsonFile = ParseJsonObject(fJson);
+                pJsonFile->m_szName = line;
+                return pJsonFile;
+            }
+            else {
+                JsonObject* pJsonFile = ParseJsonObject(fJson);
+                return pJsonFile;
+            }
+            
         }
 
 
@@ -95,6 +107,7 @@ JsonValue ParseJsonValue(std::istream& fJson, const std::string& szName) {
                 pValue.m_tType = VALUE_TYPE::NUMBER;
                 return pValue;
             }
+            break;
 
         }
 
@@ -185,7 +198,25 @@ JsonObject* ParseJsonObject(std::istream& fJson) {
         case '\"':
             std::getline(fJson, line, '\"');
             pValue = ParseJsonValue(fJson, line);
-            if (!pValue.m_szName.compare("")) {
+
+            if (pObject->m_mValues.count(line) && (pValue.m_tType == VALUE_TYPE::OBJECT || pValue.m_tType == VALUE_TYPE::ARRAY)) {
+                if (pValue.m_tType == VALUE_TYPE::OBJECT) {
+                    JsonObject* pNewObject = pValue.m_pObject;
+                    for (size_t i = 0; i < pNewObject->m_vValues.size(); i++) {
+                        JsonObject* pOldObject = pObject->m_vValues[pObject->m_mValues[line]].m_pObject;
+                        pOldObject->m_mValues[pNewObject->m_vValues[i].m_szName] = pOldObject->m_vValues.size();
+                        pOldObject->m_vValues.push_back(pNewObject->m_vValues[i]);
+                    }
+                }
+                else {
+                    JsonArray* pNewArray = pValue.m_pArray;
+                    for (size_t i = 0; i < pNewArray->m_vValues.size(); i++) {
+                        JsonArray* pOldArray = pObject->m_vValues[pObject->m_mValues[line]].m_pArray;
+                        pOldArray->m_vValues.push_back(pNewArray->m_vValues[i]);
+                    }
+                }
+            }
+            else if (!pValue.m_szName.compare("")) {
 
                 pObject->m_mValues[std::to_string((uint64_t)&pValue)] = pObject->m_vValues.size();
                 pObject->m_vValues.push_back(pValue);
