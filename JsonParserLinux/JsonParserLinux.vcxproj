@@ -111,28 +111,28 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|ARM64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Static|x86'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|ARM64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLinux - Dynamic|x86'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\Release</OutDir>
+    <OutDir>$(ProjectDir)bin\$(Platform)\Release\</OutDir>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\JsonParser\JsonArray.cpp" />

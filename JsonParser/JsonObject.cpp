@@ -26,10 +26,10 @@ JsonObject::~JsonObject() {
 }
 
 bool JsonObject::SetNumber(const std::string& szName, const double num) {
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID) {
-        pValue.m_tType = VALUE_TYPE::NUMBER;
-        pValue.m_dbValue = num;
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType != VALUE_TYPE::INVALID) {
+        pValue->m_tType = VALUE_TYPE::NUMBER;
+        pValue->m_dbValue = num;
         return true;
     }
     return false;
@@ -55,10 +55,10 @@ bool JsonObject::GetBoolean(const std::string& szName) {
     return false;
 }
 bool JsonObject::SetBoolean(const std::string& szName, const bool bValue) {
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID) {
-        pValue.m_tType = VALUE_TYPE::BOOL;
-        pValue.m_bValue = bValue;
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType != VALUE_TYPE::INVALID) {
+        pValue->m_tType = VALUE_TYPE::BOOL;
+        pValue->m_bValue = bValue;
         return true;
     }
     return false;
@@ -85,10 +85,10 @@ std::string JsonObject::GetString(const std::string& szName) {
     return "";
 }
 bool JsonObject::SetString(const std::string& szName, const std::string& szValue) {
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID) {
-        pValue.m_tType = VALUE_TYPE::STRING;
-        pValue.m_szValue = szValue;
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType != VALUE_TYPE::INVALID) {
+        pValue->m_tType = VALUE_TYPE::STRING;
+        pValue->m_szValue = szValue;
         return true;
     }
     return false;
@@ -114,11 +114,11 @@ JsonObject* JsonObject::GetJsonObject(const std::string& szName) {
     return nullptr;
 }
 bool JsonObject::SetJsonObject(const std::string& szName, JsonObject* pObject) {
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID) {
-        pValue.m_tType = VALUE_TYPE::OBJECT;
-        pValue.m_pObject = pObject;
-        pValue.m_pObject->m_szName = szName.c_str();
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType != VALUE_TYPE::INVALID) {
+        pValue->m_tType = VALUE_TYPE::OBJECT;
+        pValue->m_pObject = pObject;
+        pValue->m_pObject->m_szName = szName.c_str();
         return true;
     }
     return false;
@@ -146,11 +146,11 @@ JsonArray* JsonObject::GetJsonArray(const std::string& szName) {
     return nullptr;
 }
 bool JsonObject::SetJsonArray(const std::string& szName, JsonArray* pArray) {
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID) {
-        pValue.m_tType = VALUE_TYPE::ARRAY;
-        pValue.m_pArray = pArray;
-        pValue.m_pArray->m_szName = szName.c_str();
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType != VALUE_TYPE::INVALID) {
+        pValue->m_tType = VALUE_TYPE::ARRAY;
+        pValue->m_pArray = pArray;
+        pValue->m_pArray->m_szName = szName.c_str();
         return true;
     }
     return false;
