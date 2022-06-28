@@ -284,15 +284,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="JsonArray.cpp" />
+    <ClCompile Include="JsonArrayW.cpp" />
     <ClCompile Include="JsonObject.cpp" />
+    <ClCompile Include="JsonObjectW.cpp" />
     <ClCompile Include="JsonParser.cpp" />
+    <ClCompile Include="JsonParserW.cpp" />
     <ClCompile Include="JsonValue.cpp" />
+    <ClCompile Include="JsonValueW.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JsonArray.h" />
+    <ClInclude Include="JsonArrayW.h" />
     <ClInclude Include="JsonObject.h" />
+    <ClInclude Include="JsonObjectW.h" />
     <ClInclude Include="JsonParser.h" />
+    <ClInclude Include="JsonParserW.h" />
     <ClInclude Include="JsonValue.h" />
+    <ClInclude Include="JsonValueW.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

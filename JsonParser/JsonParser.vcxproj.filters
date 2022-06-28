@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Wide">
+      <UniqueIdentifier>{87c32ed6-e201-4ffd-8cbb-78e4b25d842c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JsonParser.cpp">
@@ -27,6 +30,18 @@
     <ClCompile Include="JsonValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="JsonArrayW.cpp">
+      <Filter>Source Files\Wide</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonObjectW.cpp">
+      <Filter>Source Files\Wide</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonParserW.cpp">
+      <Filter>Source Files\Wide</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonValueW.cpp">
+      <Filter>Source Files\Wide</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JsonArray.h">
@@ -40,6 +55,18 @@
     </ClInclude>
     <ClInclude Include="JsonParser.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonArrayW.h">
+      <Filter>Source Files\Wide</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjectW.h">
+      <Filter>Source Files\Wide</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonParserW.h">
+      <Filter>Source Files\Wide</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonValueW.h">
+      <Filter>Source Files\Wide</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

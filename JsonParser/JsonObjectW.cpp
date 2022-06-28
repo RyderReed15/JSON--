@@ -1,20 +1,20 @@
-#include "JsonObject.h"
+#include "JsonObjectW.h"
 #include <iostream>
 
-JsonObject::JsonObject() {
-    m_szName = "";
+JsonObjectW::JsonObjectW() {
+    m_szName = L"";
 }
 
-JsonObject::JsonObject(JsonObject& copyObject) {
+JsonObjectW::JsonObjectW(JsonObjectW& copyObject) {
     for (size_t i = 0; i < copyObject.m_vValues.size(); i++) {
-        JsonValue pValue = copyObject.m_vValues[i];
+        JsonValueW pValue = copyObject.m_vValues[i];
         m_mValues[copyObject.m_vValues[i].m_szName] = m_vValues.size();
         m_vValues.push_back(pValue);
     }
-    m_szName = std::string(copyObject.m_szName);
+    m_szName = std::wstring(copyObject.m_szName);
 }
 
-JsonObject::~JsonObject() {
+JsonObjectW::~JsonObjectW() {
 
     for (size_t i = 0; i < m_vValues.size(); i++) {
         m_vValues[i].DeepDelete();
@@ -25,8 +25,8 @@ JsonObject::~JsonObject() {
 
 }
 
-bool JsonObject::SetNumber(const std::string& szName, const double num) {
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+bool JsonObjectW::SetNumber(const std::wstring& szName, const double num) {
+    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
     if (pValue->m_tType != VALUE_TYPE::INVALID) {
         pValue->m_tType = VALUE_TYPE::NUMBER;
         pValue->m_dbValue = num;
@@ -35,9 +35,9 @@ bool JsonObject::SetNumber(const std::string& szName, const double num) {
     return false;
 }
 
-bool JsonObject::AddNumber(const std::string& szName, const double num) {
+bool JsonObjectW::AddNumber(const std::wstring& szName, const double num) {
 
-    JsonValue pValue = JsonValue();
+    JsonValueW pValue = JsonValueW();
     pValue.m_tType = VALUE_TYPE::NUMBER;
     pValue.m_szName = szName.c_str();
     pValue.m_dbValue = num;
@@ -46,16 +46,16 @@ bool JsonObject::AddNumber(const std::string& szName, const double num) {
     return pValue.m_tType != VALUE_TYPE::INVALID;
 }
 
-bool JsonObject::GetBoolean(const std::string& szName) {
+bool JsonObjectW::GetBoolean(const std::wstring& szName) {
     if (!m_mValues.count(szName)) return false;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
+    JsonValueW pValue = m_vValues[m_mValues[szName]];
     if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::BOOL) {
         return pValue.m_bValue;
     }
     return false;
 }
-bool JsonObject::SetBoolean(const std::string& szName, const bool bValue) {
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+bool JsonObjectW::SetBoolean(const std::wstring& szName, const bool bValue) {
+    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
     if (pValue->m_tType != VALUE_TYPE::INVALID) {
         pValue->m_tType = VALUE_TYPE::BOOL;
         pValue->m_bValue = bValue;
@@ -64,9 +64,9 @@ bool JsonObject::SetBoolean(const std::string& szName, const bool bValue) {
     return false;
 }
 
-bool JsonObject::AddBoolean(const std::string& szName, const bool bValue) {
+bool JsonObjectW::AddBoolean(const std::wstring& szName, const bool bValue) {
     
-    JsonValue pValue = JsonValue();
+    JsonValueW pValue = JsonValueW();
     pValue.m_tType = VALUE_TYPE::BOOL;
     pValue.m_szName = szName.c_str();
     pValue.m_bValue = bValue;
@@ -76,16 +76,16 @@ bool JsonObject::AddBoolean(const std::string& szName, const bool bValue) {
    
 }
 
-std::string JsonObject::GetString(const std::string& szName) {
-    if (!m_mValues.count(szName)) return "";
-    JsonValue pValue = m_vValues[m_mValues[szName]];
+std::wstring JsonObjectW::GetString(const std::wstring& szName) {
+    if (!m_mValues.count(szName)) return L"";
+    JsonValueW pValue = m_vValues[m_mValues[szName]];
     if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::STRING) {
         return pValue.m_szValue;
     }
-    return "";
+    return L"";
 }
-bool JsonObject::SetString(const std::string& szName, const std::string& szValue) {
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+bool JsonObjectW::SetString(const std::wstring& szName, const std::wstring& szValue) {
+    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
     if (pValue->m_tType != VALUE_TYPE::INVALID) {
         pValue->m_tType = VALUE_TYPE::STRING;
         pValue->m_szValue = szValue;
@@ -93,9 +93,9 @@ bool JsonObject::SetString(const std::string& szName, const std::string& szValue
     }
     return false;
 }
-bool JsonObject::AddString(const std::string& szName, const std::string& szValue) {
+bool JsonObjectW::AddString(const std::wstring& szName, const std::wstring& szValue) {
     
-    JsonValue pValue = JsonValue();
+    JsonValueW pValue = JsonValueW();
     pValue.m_tType = VALUE_TYPE::STRING;
     pValue.m_szName = szName.c_str();
     pValue.m_szValue = szValue.c_str();
@@ -105,16 +105,16 @@ bool JsonObject::AddString(const std::string& szName, const std::string& szValue
     
 }
 
-JsonObject* JsonObject::GetJsonObject(const std::string& szName) {
+JsonObjectW* JsonObjectW::GetJsonObject(const std::wstring& szName) {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
+    JsonValueW pValue = m_vValues[m_mValues[szName]];
     if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::OBJECT) {
         return pValue.m_pObject;
     }
     return nullptr;
 }
-bool JsonObject::SetJsonObject(const std::string& szName, JsonObject* pObject) {
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+bool JsonObjectW::SetJsonObject(const std::wstring& szName, JsonObjectW* pObject) {
+    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
     if (pValue->m_tType != VALUE_TYPE::INVALID) {
         pValue->m_tType = VALUE_TYPE::OBJECT;
         pValue->m_pObject = pObject;
@@ -123,9 +123,9 @@ bool JsonObject::SetJsonObject(const std::string& szName, JsonObject* pObject) {
     }
     return false;
 }
-bool JsonObject::AddJsonObject(const std::string& szName, JsonObject* pObject) {
+bool JsonObjectW::AddJsonObject(const std::wstring& szName, JsonObjectW* pObject) {
     
-    JsonValue pValue = JsonValue();
+    JsonValueW pValue = JsonValueW();
     pValue.m_tType = VALUE_TYPE::OBJECT;
     pValue.m_szName = szName.c_str();
     pValue.m_pObject = pObject;
@@ -136,17 +136,17 @@ bool JsonObject::AddJsonObject(const std::string& szName, JsonObject* pObject) {
     
 }
 
-JsonArray* JsonObject::GetJsonArray(const std::string& szName) {
+JsonArrayW* JsonObjectW::GetJsonArray(const std::wstring& szName) {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
+    JsonValueW pValue = m_vValues[m_mValues[szName]];
     if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::ARRAY) {
 
         return pValue.m_pArray;
     }
     return nullptr;
 }
-bool JsonObject::SetJsonArray(const std::string& szName, JsonArray* pArray) {
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+bool JsonObjectW::SetJsonArray(const std::wstring& szName, JsonArrayW* pArray) {
+    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
     if (pValue->m_tType != VALUE_TYPE::INVALID) {
         pValue->m_tType = VALUE_TYPE::ARRAY;
         pValue->m_pArray = pArray;
@@ -156,9 +156,9 @@ bool JsonObject::SetJsonArray(const std::string& szName, JsonArray* pArray) {
     return false;
 }
 
-bool JsonObject::AddJsonArray(const std::string& szName, JsonArray* pArray) {
+bool JsonObjectW::AddJsonArray(const std::wstring& szName, JsonArrayW* pArray) {
     
-    JsonValue pValue = JsonValue();
+    JsonValueW pValue = JsonValueW();
     pValue.m_tType = VALUE_TYPE::ARRAY;
     pValue.m_szName = szName.c_str();
     pValue.m_pArray = pArray;
@@ -169,12 +169,12 @@ bool JsonObject::AddJsonArray(const std::string& szName, JsonArray* pArray) {
     
 }
 
-void JsonObject::RemoveValue(const std::string& szName) {
+void JsonObjectW::RemoveValue(const std::wstring& szName) {
     m_mValues.erase(szName);
 
 }
 
-JsonObject JsonObject::operator=(JsonObject& rhs) {
+JsonObjectW JsonObjectW::operator=(JsonObjectW& rhs) {
     if (this == &rhs) {
         return *this;
     }
@@ -182,7 +182,7 @@ JsonObject JsonObject::operator=(JsonObject& rhs) {
     m_vValues.clear();
     m_mValues.clear();
     for (size_t i = 0; i < rhs.m_vValues.size(); i++) {
-        JsonValue pValue = rhs.m_vValues[i];
+        JsonValueW pValue = rhs.m_vValues[i];
         m_mValues[m_vValues[i].m_szName] = m_vValues.size();
         m_vValues.push_back(pValue);
     }
