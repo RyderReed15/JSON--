@@ -19,7 +19,7 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
             JsonObjectW* pJsonFile = new JsonObjectW();
             pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(fJson, L""));
 
-            delete pCodec;
+            //delete pCodec; 
             return pJsonFile;
         }
         else {
@@ -31,13 +31,13 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
                 JsonObjectW* pJsonFile = ParseJsonObjectW(fJson);
                 pJsonFile->m_szName = line;
 
-                delete pCodec;
+                //delete pCodec;
                 return pJsonFile;
             }
             else {
                 JsonObjectW* pJsonFile = ParseJsonObjectW(fJson);
 
-                delete pCodec;
+                //delete pCodec;
                 return pJsonFile;
             }
             
@@ -47,7 +47,7 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
 
     }
 
-    delete pCodec;
+    //delete pCodec; Causes a crash because its protected?
     return nullptr;
 
 }
@@ -281,7 +281,7 @@ JsonObjectW* ParseJsonObjectW(std::wistream& fJson) {
     return pObject;
 }
 
-bool WriteJsonFile(const char* szPath, JsonObjectW* pJsonObject) {
+bool WriteJsonFileW(const char* szPath, JsonObjectW* pJsonObject) {
     std::wofstream fJson;
     fJson.open(szPath);
     if (fJson.is_open()) {
