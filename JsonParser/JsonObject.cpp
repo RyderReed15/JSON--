@@ -48,9 +48,9 @@ bool JsonObject::AddNumber(const std::string& szName, const double num) {
 
 bool JsonObject::GetBoolean(const std::string& szName) {
     if (!m_mValues.count(szName)) return false;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::BOOL) {
-        return pValue.m_bValue;
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType == VALUE_TYPE::BOOL) {
+        return pValue->m_bValue;
     }
     return false;
 }
@@ -78,9 +78,9 @@ bool JsonObject::AddBoolean(const std::string& szName, const bool bValue) {
 
 std::string JsonObject::GetString(const std::string& szName) {
     if (!m_mValues.count(szName)) return "";
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::STRING) {
-        return pValue.m_szValue;
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType == VALUE_TYPE::STRING) {
+        return pValue->m_szValue;
     }
     return "";
 }
@@ -107,9 +107,9 @@ bool JsonObject::AddString(const std::string& szName, const std::string& szValue
 
 JsonObject* JsonObject::GetJsonObject(const std::string& szName) {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::OBJECT) {
-        return pValue.m_pObject;
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType == VALUE_TYPE::OBJECT) {
+        return pValue->m_pObject;
     }
     return nullptr;
 }
@@ -138,10 +138,10 @@ bool JsonObject::AddJsonObject(const std::string& szName, JsonObject* pObject) {
 
 JsonArray* JsonObject::GetJsonArray(const std::string& szName) {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
-    if (pValue.m_tType != VALUE_TYPE::INVALID && pValue.m_tType == VALUE_TYPE::ARRAY) {
+    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    if (pValue->m_tType == VALUE_TYPE::ARRAY) {
 
-        return pValue.m_pArray;
+        return pValue->m_pArray;
     }
     return nullptr;
 }
@@ -182,9 +182,8 @@ JsonObject JsonObject::operator=(JsonObject& rhs) {
     m_vValues.clear();
     m_mValues.clear();
     for (size_t i = 0; i < rhs.m_vValues.size(); i++) {
-        JsonValue pValue = rhs.m_vValues[i];
         m_mValues[m_vValues[i].m_szName] = m_vValues.size();
-        m_vValues.push_back(pValue);
+        m_vValues.push_back(rhs.m_vValues[i]);
     }
     return *this;
 }
