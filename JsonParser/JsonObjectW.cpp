@@ -1,5 +1,4 @@
 #include "JsonObjectW.h"
-#include <iostream>
 
 JsonObjectW::JsonObjectW() {
     m_szName = L"";

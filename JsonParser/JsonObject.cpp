@@ -1,5 +1,4 @@
 #include "JsonObject.h"
-#include <iostream>
 
 JsonObject::JsonObject() {
     m_szName = "";

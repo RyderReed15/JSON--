@@ -70,8 +70,9 @@ public:
 template <typename T>
 T JsonArray::GetNumber(size_t index) const {
     if (index >= 0 && index < m_vValues.size()) {
-        if (m_vValues[index].m_tType == VALUE_TYPE::NUMBER) {
-            return (T)m_vValues[index].m_dbValue;
+        JsonValue* pValue = &m_vValues[index];
+        if (pValue->m_tType == VALUE_TYPE::NUMBER) {
+            return (T)pValue->m_dbValue;
         }
        
     }
@@ -84,7 +85,7 @@ JsonObject* JsonArray::GetJsonObjectByValue(const std::string& szValueName, T tV
         if (m_vValues[i].m_tType == VALUE_TYPE::OBJECT) {
             JsonObject* pObject = m_vValues[i].m_pObject;
             if (tValue == (T)(pObject->m_vValues[pObject->m_mValues[szValueName]].m_szValue)) {
-                return m_vValues[i].m_pObject;
+                return pObject;
             }
         }
     }

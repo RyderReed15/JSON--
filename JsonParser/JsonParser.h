@@ -22,12 +22,12 @@ JsonObject*     ParseJsonString (const std::string& szJson);
 //Parses the json string and returns a JsonObject holding the parsed values - delete the object before exiting
 JsonObject*     ParseJsonFile   (const char* szPath);
 //Helper to decide which value to parse as
-JsonValue      ParseJsonValue  (std::istream& fJson, const std::string& szName);
-bool            ParseBool       (std::istream& fJson, char chPrev);
-double          ParseNumber     (std::istream& fJson, char chPrev);
-std::string     ParseString     (std::istream& fJson, char chDelim);
-JsonArray*      ParseJsonArray  (std::istream& fJson, const std::string& szName);
-JsonObject*     ParseJsonObject (std::istream& fJson);
+JsonValue       ParseJsonValue  (char*& pBuffer, const char* pBufferMax, const std::string& szName);
+bool            ParseBool       (char*& pBuffer, const char* pBufferMax, char chPrev);
+double          ParseNumber     (char*& pBuffer, const char* pBufferMax, char chPrev);
+std::string     ParseString     (char*& pBuffer, const char* pBufferMax, char chDelim);
+JsonArray*      ParseJsonArray  (char*& pBuffer, const char* pBufferMax, const std::string& szName);
+JsonObject*     ParseJsonObject (char*& pBuffer, const char* pBufferMax);
 
 //Writes to a file given a pointer to a JsonObject
 bool            WriteJsonFile   (const char* szPath, JsonObject* pJsonObject);

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef JSON_OBJECT_H
-#define JSON_OBJECT_H
+#ifndef JSON_OBJECTW_H
+#define JSON_OBJECTW_H
 
 
 

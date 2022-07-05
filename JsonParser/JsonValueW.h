@@ -1,6 +1,6 @@
 #pragma once
-#ifndef JSON_VALUE_H
-#define JSON_VALUE_H
+#ifndef JSON_VALUEW_H
+#define JSON_VALUEW_H
 #include <string>
 #include <iomanip>
 #include <iostream>
@@ -10,7 +10,7 @@
 
 class JsonObjectW;
 class JsonArrayW;
-
+#ifndef JSON_VALUE_H
 enum class VALUE_TYPE {
     BOOL,
     NUMBER,
@@ -20,7 +20,7 @@ enum class VALUE_TYPE {
     OBJECT,
     INVALID
 };
-
+#endif
 
 
 class JsonValueW {
@@ -55,7 +55,7 @@ public:
 };
 
 // Takes an unescaped character and converts it to the escaped version
-// fJson - outStream of characters, chUnEscape - unescaped character to convert
+// chUnEscape - unescaped character to convert
 std::wstring UnEscapeCharacterW(const wchar_t chUnEscape);
 
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef JSON_ARRAY_H
-#define JSON_ARRAY_H
+#ifndef JSON_ARRAYW_H
+#define JSON_ARRAYW_H
 
 
 

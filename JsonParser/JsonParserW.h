@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef JSON_PARSER_H
-#define JSON_PARSER_H
+#ifndef JSON_PARSERW_H
+#define JSON_PARSERW_H
 
 #include "JsonValueW.h"
 #include "JsonObjectW.h"
@@ -14,6 +14,8 @@
 #include <vector>
 #include <unordered_map>
 #include <iomanip>
+#include <locale>
+#include <codecvt>
 
 
 
@@ -22,12 +24,12 @@ JsonObjectW*     ParseJsonStringW (const std::wstring& szJson);
 //Parses the json string and returns a JsonObject holding the parsed values - delete the object before exiting
 JsonObjectW*     ParseJsonFileW   (const char* szPath);
 //Helper to decide which value to parse as
-JsonValueW       ParseJsonValueW  (std::wistream& fJson, const std::wstring& szName);
-bool             ParseBoolW       (std::wistream& fJson, wchar_t chPrev);
-double           ParseNumberW     (std::wistream& fJson, wchar_t chPrev);
-std::wstring     ParseStringW     (std::wistream& fJson, wchar_t chDelim);
-JsonArrayW*      ParseJsonArrayW  (std::wistream& fJson, const std::wstring& szName);
-JsonObjectW*     ParseJsonObjectW (std::wistream& fJson);
+JsonValueW       ParseJsonValueW  (wchar_t*& pBuffer, const wchar_t* pBufferMax, const std::wstring& szName);
+bool             ParseBoolW       (wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev);
+double           ParseNumberW     (wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev);
+std::wstring     ParseStringW     (wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chDelim);
+JsonArrayW*      ParseJsonArrayW  (wchar_t*& pBuffer, const wchar_t* pBufferMax, const std::wstring& szName);
+JsonObjectW*     ParseJsonObjectW (wchar_t*& pBuffer, const wchar_t* pBufferMax);
 
 //Writes to a file given a pointer to a JsonObject
 bool             WriteJsonFileW   (const char* szPath, JsonObjectW* pJsonObject);
