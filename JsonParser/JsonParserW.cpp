@@ -7,18 +7,27 @@ wchar_t     EscapeCharacterW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar
 void        BufferGetLineW  (wchar_t*& pBuffer, const wchar_t* pBufferMax, std::wstring& szLine, wchar_t chDelim = '\n');
 
 JsonObjectW* ParseJsonFileW(const char* szPath) {
-    std::wifstream fJson(szPath, std::ios::binary | std::ios::ate);
-    std::codecvt_utf16<wchar_t, 0x10ffff, std::consume_header>* pCodec = new std::codecvt_utf16<wchar_t, 0x10ffff, std::consume_header>();
-    fJson.imbue(std::locale(fJson.getloc(), pCodec));
-
+    std::ifstream fJson(szPath, std::ios::binary | std::ios::ate);
+    //wstream::read is 25 - 50x slower than stream::read for some reason
+    //Read using ifstream then swab bytes if needed to corect for mismatched endians
     if (fJson.is_open()) {
-        unsigned int size = fJson.tellg();
+        unsigned int size = fJson.tellg() / 2;
+
         if (size) {
             fJson.seekg(0, std::ios::beg);
+
             wchar_t* pBuffer = new wchar_t[size];
             wchar_t* pOrigBuffer = pBuffer;
-            fJson.read(pBuffer, size);
+
+            fJson.read((char*)pBuffer, size * 2);
+
             fJson.close();
+
+            if (pBuffer[0] == 65534) {
+                _swab((char*)pBuffer, (char*)pBuffer, size * 2);
+            }
+            pBuffer++; size--;
+
             if (pBuffer[0] == '[') {
                 JsonObjectW* pJsonFile = new JsonObjectW();
                 pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(pBuffer, pBuffer + size, L""));

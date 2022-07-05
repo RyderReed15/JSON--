@@ -56,7 +56,7 @@ public:
 
 // Takes an unescaped character and converts it to the escaped version
 // chUnEscape - unescaped character to convert
-std::string UnEscapeCharacter(const char chUnEscape);W
+std::string UnEscapeCharacter(const char chUnEscape);
 
 
 #include "JsonArray.h"
