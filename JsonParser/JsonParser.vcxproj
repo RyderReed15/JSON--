@@ -131,13 +131,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - DLL|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Release\$(Platform)\DLL</OutDir>
-    <IntDir>$(SolutionDir)Release\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)Release\$(Platform)\DLL\</OutDir>
+    <IntDir>$(SolutionDir)Release\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - Lib|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Release\$(Platform)\LIB</OutDir>
-    <IntDir>$(SolutionDir)Release\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)Release\$(Platform)\LIB\</OutDir>
+    <IntDir>$(SolutionDir)Release\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Linux|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -149,15 +149,15 @@
     <LinkIncremental>false</LinkIncremental>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <OutDir>$(SolutionDir)Release\$(Platform)\DLL</OutDir>
-    <IntDir>$(SolutionDir)Release\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)Release\$(Platform)\DLL\</OutDir>
+    <IntDir>$(SolutionDir)Release\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - Lib|x64'">
     <LinkIncremental>false</LinkIncremental>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <OutDir>$(SolutionDir)Release\$(Platform)\LIB</OutDir>
-    <IntDir>$(SolutionDir)Release\$(Platform)</IntDir>
+    <OutDir>$(SolutionDir)Release\$(Platform)\LIB\</OutDir>
+    <IntDir>$(SolutionDir)Release\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Linux|x64'">
     <LinkIncremental>false</LinkIncremental>

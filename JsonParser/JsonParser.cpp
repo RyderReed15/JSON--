@@ -109,13 +109,24 @@ JsonValue ParseJsonValue(char*& pBuffer, const char* pBufferMax, const std::stri
             pValue.m_bValue = false;
             pValue.m_tType = VALUE_TYPE::NULLTYPE;
             return pValue;
-        default:
-            if (pBuffer[0] >= '-' && pBuffer[0] <= '9') {
-                pValue.m_dbValue = ParseNumber(pBuffer, pBufferMax, pBuffer[0]);
-                pValue.m_tType = VALUE_TYPE::NUMBER;
-                return pValue;
-            }
-            else if (pBuffer + 1 < pBufferMax && pBuffer[0] == '/' && pBuffer[1] == '/') {
+        case '-':
+        case '+':
+        case '.':
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            pValue.m_dbValue = ParseNumber(pBuffer, pBufferMax, pBuffer[0]);
+            pValue.m_tType = VALUE_TYPE::NUMBER;
+            return pValue;
+        case '/':
+            if (pBuffer + 1 < pBufferMax && pBuffer[1] == '/') {
                 std::string comment;
                 BufferGetLine(pBuffer, pBufferMax, comment);
             }
@@ -157,9 +168,8 @@ double ParseNumber(char*& pBuffer, const char* pBufferMax, char chPrev) {
 
 std::string ParseString(char*& pBuffer, const char* pBufferMax, char chDelim) {
     std::string szValue; 
-    while (pBuffer++ < pBufferMax) {
+    while (pBuffer++ < pBufferMax && pBuffer[0] != chDelim) {
 
-        if (pBuffer[0] == chDelim) break;
         if (pBuffer[0] == '\\' && pBuffer + 1 < pBufferMax) {
             
             pBuffer[0] = EscapeCharacter(pBuffer, pBufferMax, pBuffer[1]);
@@ -256,15 +266,16 @@ JsonObject* ParseJsonObject(char*& pBuffer, const char* pBufferMax) {
 
             }
             break;
-        default:
-            if (pBuffer + 1 < pBufferMax && pBuffer[0] == '/' && pBuffer[1] == '/') {
+        case '/':
+            if (pBuffer + 1 < pBufferMax && pBuffer[1] == '/') {
                 std::string comment;
                 BufferGetLine(pBuffer, pBufferMax, comment);
             }
             break;
+        default:
+
+            break;
         }
-
-
     }
 
     return pObject;
@@ -396,6 +407,7 @@ bool WriteJsonObject(std::ostream& fJson, JsonObject* pJsonObject, const std::st
 // Takes an escaped character and converts it to the unescaped version
 // fJson - InStream of characters, chEscape - escaped character to convert
 char EscapeCharacter(char*& pBuffer, const char* pBufferMax, char chEscape) {
+    pBuffer++;
     char acValue[4]{ '\0' };
     switch (chEscape) {
     case '\\':
@@ -410,7 +422,7 @@ char EscapeCharacter(char*& pBuffer, const char* pBufferMax, char chEscape) {
     case 'r':  return '\r';
     case 't':  return '\t';
     case 'u':
-        for (size_t i = 0; i < 4 && pBuffer + 1 < pBufferMax; i++) {
+        for (size_t i = 0; i < 4 && pBuffer + i < pBufferMax; i++) {
             acValue[i] = pBuffer[i];
         }
         pBuffer += 4;
@@ -434,10 +446,12 @@ void BufferGetLine(char*& pBuffer, const char* pBufferMax, std::string& szLine, 
     std::string szTemp;
     
     while(pBuffer++ < pBufferMax && pBuffer[0] != chDelim){
+
         szTemp += pBuffer[0];
     }
     szLine = szTemp;
 }
+
 
 
 

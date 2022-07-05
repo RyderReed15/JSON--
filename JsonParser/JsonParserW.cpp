@@ -124,13 +124,24 @@ JsonValueW ParseJsonValueW(wchar_t*& pBuffer, const wchar_t* pBufferMax, const s
             pValue.m_bValue = false;
             pValue.m_tType = VALUE_TYPE::NULLTYPE;
             return pValue;
-        default:
-            if (pBuffer[0] >= '-' && pBuffer[0] <= '9') {
-                pValue.m_dbValue = ParseNumberW(pBuffer, pBufferMax, pBuffer[0]);
-                pValue.m_tType = VALUE_TYPE::NUMBER;
-                return pValue;
-            }
-            else if (pBuffer + 1 < pBufferMax && pBuffer[0] == '/' && pBuffer[1] == '/') {
+        case '-':
+        case '+':
+        case '.':
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            pValue.m_dbValue = ParseNumberW(pBuffer, pBufferMax, pBuffer[0]);
+            pValue.m_tType = VALUE_TYPE::NUMBER;
+            return pValue;
+        case '/':
+            if (pBuffer + 1 < pBufferMax && pBuffer[1] == '/') {
                 std::wstring comment;
                 BufferGetLineW(pBuffer, pBufferMax, comment);
             }
@@ -171,9 +182,8 @@ double ParseNumberW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev
 
 std::wstring ParseStringW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chDelim) {
     std::wstring szValue; 
-    while (pBuffer++ < pBufferMax) {
+    while (pBuffer++ < pBufferMax && pBuffer[0] != chDelim){
 
-        if (pBuffer[0] == chDelim) break;
         if (pBuffer[0] == '\\' && pBuffer + 1 < pBufferMax) {
 
             pBuffer[0] = EscapeCharacterW(pBuffer, pBufferMax, pBuffer[1]);
@@ -270,11 +280,14 @@ JsonObjectW* ParseJsonObjectW(wchar_t*& pBuffer, const wchar_t* pBufferMax) {
 
             }
             break;
-        default:
-            if (pBuffer + 1 < pBufferMax && pBuffer[0] == '/' && pBuffer[1] == '/') {
+        case '/':
+            if (pBuffer + 1 < pBufferMax && pBuffer[1] == '/') {
                 std::wstring comment;
                 BufferGetLineW(pBuffer, pBufferMax, comment);
             }
+            break;
+        default:
+            
             break;
         }
 
@@ -410,6 +423,7 @@ bool WriteJsonObjectW(std::wostream& fJson, JsonObjectW* pJsonObject, const std:
 // fJson - InStream of characters, chEscape - escaped character to convert
 wchar_t EscapeCharacterW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chEscape) {
     wchar_t acValue[4]{ '\0' };
+    pBuffer++;
     switch (chEscape) {
     case '\\':
     case '/':  return chEscape;
@@ -423,7 +437,7 @@ wchar_t EscapeCharacterW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t c
     case 'r':  return '\r';
     case 't':  return '\t';
     case 'u':
-        for (size_t i = 0; i < 4 && pBuffer + 1 < pBufferMax; i++) {
+        for (size_t i = 0; i <= 4 && pBuffer + i < pBufferMax; i++) {
             acValue[i] = pBuffer[i];
         }
         pBuffer += 4;
