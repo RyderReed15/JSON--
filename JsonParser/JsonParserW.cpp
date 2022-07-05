@@ -23,7 +23,7 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
 
             fJson.close();
 
-            if (pBuffer[0] == 65534) {
+            if (pBuffer[0] == 0xFFFE) {
                 _swab((char*)pBuffer, (char*)pBuffer, size * 2);
             }
             pBuffer++; size--;
@@ -62,25 +62,20 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
 }
 
 JsonObjectW* ParseJsonStringW(const std::wstring& szJson) {
-    std::wistringstream sJson(szJson, std::ios::binary | std::ios::ate);
-    std::codecvt_utf16<wchar_t, 0x10ffff, std::consume_header>* pCodec = new std::codecvt_utf16<wchar_t, 0x10ffff, std::consume_header>();
-    sJson.imbue(std::locale(sJson.getloc(), pCodec));
-    if (sJson.good()) {
-        unsigned int size = sJson.tellg();
+    if (szJson != L"") {
+        unsigned int size = szJson.length();
         if (size) {
-            sJson.seekg(0, std::ios::beg);
-            wchar_t* pBuffer = new wchar_t[size];
-            wchar_t* pOrigBuffer = pBuffer;
-            sJson.read(pBuffer, size);
+            wchar_t* pBuffer = (wchar_t*)szJson.c_str();
+            if (pBuffer[0] == 0xFEFF) {
+                pBuffer++; size--;
+            }
             if (pBuffer[0] == '[') {
                 JsonObjectW* pJsonFile = new JsonObjectW();
                 pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(pBuffer, pBuffer + size, L""));
-                delete pOrigBuffer;
                 return pJsonFile;
             }
             else {
                 JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBuffer + size);
-                delete pOrigBuffer;
                 return pJsonFile;
             }
         }

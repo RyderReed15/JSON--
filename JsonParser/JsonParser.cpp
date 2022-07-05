@@ -1,7 +1,4 @@
 #include "JsonParser.h"
-#include "JsonParserW.h"
-#include "JsonObjectW.h"
-#include <chrono>
 
 const char* chIndent = "\t"; // Indent string
 
@@ -53,23 +50,17 @@ JsonObject* ParseJsonFile(const char* szPath) {
 }
 
 JsonObject* ParseJsonString(const std::string& szJson) {
-    std::istringstream sJson(szJson, std::ios::binary | std::ios::ate);
-    if (sJson.good()) {
-        unsigned int size = sJson.tellg();
-        if (size) {
-            sJson.seekg(0, std::ios::beg);
-            char* pBuffer = new char[size];
-            char* pOrigBuffer = pBuffer;
-            sJson.read(pBuffer, size);
+    if (szJson != "") {
+
+        if (szJson.length()) {
+            char* pBuffer = (char*)szJson.c_str();
             if (pBuffer[0] == '[') {
                 JsonObject* pJsonFile = new JsonObject();
-                pJsonFile->AddJsonArray("1", ParseJsonArray(pBuffer, pBuffer + size, ""));
-                delete pOrigBuffer;
+                pJsonFile->AddJsonArray("1", ParseJsonArray(pBuffer, pBuffer + szJson.length(), ""));
                 return pJsonFile;
             }
             else {
-                JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + size);
-                delete pOrigBuffer;
+                JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + szJson.length());
                 return pJsonFile;
             }
         }
