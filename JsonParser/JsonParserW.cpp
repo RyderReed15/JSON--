@@ -16,8 +16,8 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
         if (size) {
             fJson.seekg(0, std::ios::beg);
 
-            wchar_t* pBuffer = new wchar_t[size];
-            wchar_t* pOrigBuffer = pBuffer;
+            wchar_t* pOrigBuffer = new wchar_t[size];
+            wchar_t* pBuffer = pOrigBuffer;
 
             fJson.read((char*)pBuffer, size * 2);
 
@@ -31,7 +31,7 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
             if (pBuffer[0] == '[') {
                 JsonObjectW* pJsonFile = new JsonObjectW();
                 pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(pBuffer, pBuffer + size, L""));
-                delete pOrigBuffer;
+                delete [] pOrigBuffer;
                 return pJsonFile;
             }
             else {
@@ -41,12 +41,12 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
                     BufferGetLineW(pBuffer, pBuffer + size, temp, '{');
                     JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBuffer + size);
                     pJsonFile->m_szName = line;
-                    delete pOrigBuffer;
+                    delete [] pOrigBuffer;
                     return pJsonFile;
                 }
                 else {
                     JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBuffer + size);
-                    delete pOrigBuffer;
+                    delete [] pOrigBuffer;
                     return pJsonFile;
                 }
 
@@ -155,17 +155,14 @@ JsonValueW ParseJsonValueW(wchar_t*& pBuffer, const wchar_t* pBufferMax, const s
 
 bool ParseBoolW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev) {
     std::wstring szValue; szValue += chPrev;
-    for (; pBuffer < pBufferMax; pBuffer++) {
+    while (pBuffer++ < pBufferMax) {
 
         if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
 
-        szValue += pBuffer;
+        szValue += pBuffer[0];
     }
     StringToLowerW(szValue);
-    if (!szValue.compare(L"true")) {
-        return true;
-    }
-    return false;
+    return !szValue.compare(L"true");
 }
 
 double ParseNumberW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev) {

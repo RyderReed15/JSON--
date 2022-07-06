@@ -14,14 +14,14 @@ JsonObject* ParseJsonFile(const char* szPath) {
         unsigned int size = fJson.tellg();
         if (size) {
             fJson.seekg(0, std::ios::beg);
-            char* pBuffer = new char[size];
-            char* pOrigBuffer = pBuffer;
+            char* pOrigBuffer = new char[size];
+            char* pBuffer = pOrigBuffer;
             fJson.read(pBuffer, size);
             fJson.close();
             if (pBuffer[0] == '[') {
                 JsonObject* pJsonFile = new JsonObject();
                 pJsonFile->AddJsonArray("1", ParseJsonArray(pBuffer, pBuffer + size, ""));
-                delete pOrigBuffer;
+                delete [] pOrigBuffer;
                 return pJsonFile;
             }
             else {
@@ -31,12 +31,12 @@ JsonObject* ParseJsonFile(const char* szPath) {
                     BufferGetLine(pBuffer, pBuffer + size, temp, '{');
                     JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + size);
                     pJsonFile->m_szName = line;
-                    delete pOrigBuffer;
+                    delete [] pOrigBuffer;
                     return pJsonFile;
                 }
                 else {
                     JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + size);
-                    delete pOrigBuffer;
+                    delete [] pOrigBuffer;
                     return pJsonFile;
                 }
 
@@ -141,17 +141,14 @@ JsonValue ParseJsonValue(char*& pBuffer, const char* pBufferMax, const std::stri
 
 bool ParseBool(char*& pBuffer, const char* pBufferMax, char chPrev) {
     std::string szValue; szValue += chPrev;
-    for (; pBuffer < pBufferMax; pBuffer++) {
+    while (pBuffer++ < pBufferMax) {
         
         if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
 
-        szValue += pBuffer;
+        szValue += pBuffer[0];
     }
     StringToLower(szValue);
-    if (!szValue.compare("true")) {
-        return true;
-    }
-    return false;
+    return !szValue.compare("true");
 }
 
 double ParseNumber(char*& pBuffer, const char* pBufferMax, char chPrev) {
@@ -451,7 +448,6 @@ void BufferGetLine(char*& pBuffer, const char* pBufferMax, std::string& szLine, 
     }
     szLine = szTemp;
 }
-
 
 
 
