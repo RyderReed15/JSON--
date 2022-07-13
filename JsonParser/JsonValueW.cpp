@@ -163,11 +163,7 @@ std::wostream& operator<< (std::wostream& out, const JsonValueW& rhs) {
         out << "\"" << rhs.m_szName << "\": " << (rhs.m_bValue ? "true" : "false");
         break;
     case VALUE_TYPE::NUMBER:
-        if (floor(rhs.m_dbValue) == rhs.m_dbValue) {
-            out << "\"" << rhs.m_szName << "\": " << std::fixed << std::setprecision(0) << rhs.m_dbValue;
-            break;
-        }
-        out << "\"" << rhs.m_szName << "\": " << std::fixed << std::setprecision(5) << rhs.m_dbValue;
+        out << "\"" << rhs.m_szName << "\": " << std::setprecision(DOUBLE_PRECISION) << rhs.m_dbValue;
         break;
     case VALUE_TYPE::STRING:
         for (size_t i = 0; i < rhs.m_szValue.size(); i++) {

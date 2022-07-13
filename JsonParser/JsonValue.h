@@ -6,7 +6,7 @@
 #include <iostream>
 #include <math.h>
 
-
+#define DOUBLE_PRECISION 15
 
 class JsonObject;
 class JsonArray;

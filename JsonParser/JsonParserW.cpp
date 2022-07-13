@@ -349,11 +349,7 @@ bool WriteJsonArrayW(std::wostream& fJson, JsonArrayW* pArray, const std::wstrin
                 fJson << indent + chIndent << (pValue.m_bValue ? "true" : "false");
                 break;
             case VALUE_TYPE::NUMBER:
-                if (floor(pValue.m_dbValue) == pValue.m_dbValue) {
-                    fJson << indent << std::fixed << std::setprecision(0) << pValue.m_dbValue;
-                    break;
-                }
-                fJson << indent << std::fixed << std::setprecision(5) << pValue.m_dbValue;
+                fJson << indent << std::setprecision(DOUBLE_PRECISION) << pValue.m_dbValue;
                 break;
             case VALUE_TYPE::STRING:
                 fJson << indent + chIndent + L"\"" << pValue.m_szValue << "\"";

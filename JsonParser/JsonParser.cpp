@@ -337,11 +337,7 @@ bool WriteJsonArray(std::ostream& fJson, JsonArray* pArray, const std::string& i
                 fJson << indent + chIndent << (pValue.m_bValue ? "true" : "false");
                 break;
             case VALUE_TYPE::NUMBER:
-                if (floor(pValue.m_dbValue) == pValue.m_dbValue) {
-                    fJson << indent << std::fixed << std::setprecision(0) << pValue.m_dbValue;
-                    break;
-                }
-                fJson << indent << std::fixed << std::setprecision(5) << pValue.m_dbValue;
+                fJson << indent << std::setprecision(DOUBLE_PRECISION) << pValue.m_dbValue;
                 break;
             case VALUE_TYPE::STRING:
                 fJson << indent + chIndent + "\"" << pValue.m_szValue << "\"";
@@ -353,7 +349,10 @@ bool WriteJsonArray(std::ostream& fJson, JsonArray* pArray, const std::string& i
                 pValue.m_pArray->m_szName = szArrayName;
                 break;
             case VALUE_TYPE::OBJECT:
+                szArrayName = pValue.m_pObject->m_szName;
+                pValue.m_pObject->m_szName = "";
                 WriteJsonObject(fJson, pValue.m_pObject, indent + chIndent);
+                pValue.m_pObject->m_szName = szArrayName;
                 break;
             case VALUE_TYPE::NULLTYPE:
                 fJson << indent << chIndent << "null";
@@ -447,6 +446,7 @@ void BufferGetLine(char*& pBuffer, const char* pBufferMax, std::string& szLine, 
     }
     szLine = szTemp;
 }
+
 
 
 
