@@ -21,6 +21,9 @@
 JsonObject*     ParseJsonString (const std::string& szJson);
 //Parses the json string and returns a JsonObject holding the parsed values - delete the object before exiting
 JsonObject*     ParseJsonFile   (const char* szPath);
+
+JsonObject*     ParseBuffer     (char*& pBuffer, const char* pBufferMax);
+
 //Helper to decide which value to parse as
 JsonValue       ParseJsonValue  (char*& pBuffer, const char* pBufferMax, const std::string& szName);
 bool            ParseBool       (char*& pBuffer, const char* pBufferMax, char chPrev);

@@ -23,6 +23,8 @@
 JsonObjectW*     ParseJsonStringW (const std::wstring& szJson);
 //Parses the json string and returns a JsonObject holding the parsed values - delete the object before exiting
 JsonObjectW*     ParseJsonFileW   (const char* szPath);
+
+JsonObjectW*     ParseBufferW     (wchar_t*& pBuffer, const wchar_t* pBufferMax);
 //Helper to decide which value to parse as
 JsonValueW       ParseJsonValueW  (wchar_t*& pBuffer, const wchar_t* pBufferMax, const std::wstring& szName);
 bool             ParseBoolW       (wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev);

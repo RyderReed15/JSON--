@@ -18,29 +18,9 @@ JsonObject* ParseJsonFile(const char* szPath) {
             char* pBuffer = pOrigBuffer;
             fJson.read(pBuffer, size);
             fJson.close();
-            if (pBuffer[0] == '[') {
-                JsonObject* pJsonFile = new JsonObject();
-                pJsonFile->AddJsonArray("1", ParseJsonArray(pBuffer, pBuffer + size, ""));
-                delete [] pOrigBuffer;
-                return pJsonFile;
-            }
-            else {
-                if (pBuffer[0] == '\"') {
-                    std::string line, temp;
-                    BufferGetLine(pBuffer, pBuffer + size, line, '\"');
-                    BufferGetLine(pBuffer, pBuffer + size, temp, '{');
-                    JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + size);
-                    pJsonFile->m_szName = line;
-                    delete [] pOrigBuffer;
-                    return pJsonFile;
-                }
-                else {
-                    JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + size);
-                    delete [] pOrigBuffer;
-                    return pJsonFile;
-                }
-
-            }
+            JsonObject* pFile = ParseBuffer(pBuffer, pOrigBuffer + size);
+            delete[] pOrigBuffer;
+            return pFile;
         }
         fJson.close();
        
@@ -54,15 +34,38 @@ JsonObject* ParseJsonString(const std::string& szJson) {
 
         if (szJson.length()) {
             char* pBuffer = (char*)szJson.c_str();
-            if (pBuffer[0] == '[') {
-                JsonObject* pJsonFile = new JsonObject();
-                pJsonFile->AddJsonArray("1", ParseJsonArray(pBuffer, pBuffer + szJson.length(), ""));
-                return pJsonFile;
-            }
-            else {
-                JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBuffer + szJson.length());
-                return pJsonFile;
-            }
+            return ParseBuffer(pBuffer, pBuffer + szJson.length());
+        }
+    }
+    return nullptr;
+}
+
+JsonObject* ParseBuffer(char*& pBuffer, const char* pBufferMax) {
+    while (pBuffer < pBufferMax) {
+
+        if (pBuffer[0] == '[') {
+            JsonObject* pJsonFile = new JsonObject();
+            pJsonFile->AddJsonArray("1", ParseJsonArray(pBuffer, pBufferMax, ""));
+            return pJsonFile;
+        }
+        else if (pBuffer[0] == '\"') {
+            std::string line, temp;
+            BufferGetLine(pBuffer, pBufferMax, line, '\"');
+            BufferGetLine(pBuffer, pBufferMax, temp, '{');
+            JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBufferMax);
+            pJsonFile->m_szName = line;
+            return pJsonFile;
+        }
+        else if (pBuffer[0] == '{') {
+            JsonObject* pJsonFile = ParseJsonObject(pBuffer, pBufferMax);
+            return pJsonFile;
+        }
+        else if (pBuffer[0] == '/' && pBuffer + 1 <= pBufferMax && pBuffer[1] == '/') {
+            std::string line;
+            BufferGetLine(pBuffer, pBufferMax, line);
+        }
+        else {
+            pBuffer++;
         }
     }
     return nullptr;
@@ -74,12 +77,6 @@ JsonValue ParseJsonValue(char*& pBuffer, const char* pBufferMax, const std::stri
     while (pBuffer++ < pBufferMax) {
 
         switch (pBuffer[0]) {
-        case ',':
-        case '=':
-        case ':':
-        case ' ':
-        case '\n':
-            break;
         case ']':
             return pValue;
         case '\"':
@@ -131,6 +128,8 @@ JsonValue ParseJsonValue(char*& pBuffer, const char* pBufferMax, const std::stri
                 BufferGetLine(pBuffer, pBufferMax, comment);
             }
             break;
+        default:
+            break;
 
         }
 
@@ -143,7 +142,7 @@ bool ParseBool(char*& pBuffer, const char* pBufferMax, char chPrev) {
     std::string szValue; szValue += chPrev;
     while (pBuffer++ < pBufferMax) {
         
-        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
+        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == '\r' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
 
         szValue += pBuffer[0];
     }
@@ -155,7 +154,7 @@ double ParseNumber(char*& pBuffer, const char* pBufferMax, char chPrev) {
     std::string szValue; szValue += chPrev;
     while (pBuffer++ < pBufferMax) {
         
-        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
+        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == '\r' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
 
         szValue += pBuffer[0];
 
@@ -448,6 +447,7 @@ void BufferGetLine(char*& pBuffer, const char* pBufferMax, std::string& szLine, 
     }
     szLine = szTemp;
 }
+
 
 
 

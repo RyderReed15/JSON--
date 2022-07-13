@@ -27,30 +27,8 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
                 _swab((char*)pBuffer, (char*)pBuffer, size * 2);
             }
             pBuffer++; size--;
-
-            if (pBuffer[0] == '[') {
-                JsonObjectW* pJsonFile = new JsonObjectW();
-                pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(pBuffer, pBuffer + size, L""));
-                delete [] pOrigBuffer;
-                return pJsonFile;
-            }
-            else {
-                if (pBuffer[0] == '\"') {
-                    std::wstring line, temp;
-                    BufferGetLineW(pBuffer, pBuffer + size, line, '\"');
-                    BufferGetLineW(pBuffer, pBuffer + size, temp, '{');
-                    JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBuffer + size);
-                    pJsonFile->m_szName = line;
-                    delete [] pOrigBuffer;
-                    return pJsonFile;
-                }
-                else {
-                    JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBuffer + size);
-                    delete [] pOrigBuffer;
-                    return pJsonFile;
-                }
-
-            }
+            return ParseBufferW(pBuffer, pOrigBuffer + size);
+            
         }
         fJson.close();
 
@@ -69,15 +47,38 @@ JsonObjectW* ParseJsonStringW(const std::wstring& szJson) {
             if (pBuffer[0] == 0xFEFF) {
                 pBuffer++; size--;
             }
-            if (pBuffer[0] == '[') {
-                JsonObjectW* pJsonFile = new JsonObjectW();
-                pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(pBuffer, pBuffer + size, L""));
-                return pJsonFile;
-            }
-            else {
-                JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBuffer + size);
-                return pJsonFile;
-            }
+            return ParseBufferW(pBuffer, pBuffer + size);
+        }
+    }
+    return nullptr;
+}
+
+JsonObjectW* ParseBufferW(wchar_t*& pBuffer, const wchar_t* pBufferMax) {
+    while (pBuffer < pBufferMax) {
+
+        if (pBuffer[0] == '[') {
+            JsonObjectW* pJsonFile = new JsonObjectW();
+            pJsonFile->AddJsonArray(L"1", ParseJsonArrayW(pBuffer, pBufferMax, L""));
+            return pJsonFile;
+        }
+        else if (pBuffer[0] == '\"') {
+            std::wstring line, temp;
+            BufferGetLineW(pBuffer, pBufferMax, line, '\"');
+            BufferGetLineW(pBuffer, pBufferMax, temp, '{');
+            JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBufferMax);
+            pJsonFile->m_szName = line;
+            return pJsonFile;
+        }
+        else if (pBuffer[0] == '{') {
+            JsonObjectW* pJsonFile = ParseJsonObjectW(pBuffer, pBufferMax);
+            return pJsonFile;
+        }
+        else if (pBuffer[0] == '/' && pBuffer + 1 <= pBufferMax && pBuffer[1] == '/') {
+            std::wstring line;
+            BufferGetLineW(pBuffer, pBufferMax, line);
+        }
+        else {
+            pBuffer++;
         }
     }
     return nullptr;
@@ -89,12 +90,6 @@ JsonValueW ParseJsonValueW(wchar_t*& pBuffer, const wchar_t* pBufferMax, const s
     while (pBuffer++ < pBufferMax) {
 
         switch (pBuffer[0]) {
-        case ',':
-        case '=':
-        case ':':
-        case ' ':
-        case '\n':
-            break;
         case ']':
             return pValue;
         case '\"':
@@ -146,6 +141,8 @@ JsonValueW ParseJsonValueW(wchar_t*& pBuffer, const wchar_t* pBufferMax, const s
                 BufferGetLineW(pBuffer, pBufferMax, comment);
             }
             break;
+        default:
+            break;
 
         }
     }
@@ -157,19 +154,18 @@ bool ParseBoolW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev) {
     std::wstring szValue; szValue += chPrev;
     while (pBuffer++ < pBufferMax) {
 
-        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
+        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == '\r' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
 
         szValue += pBuffer[0];
     }
     StringToLowerW(szValue);
     return !szValue.compare(L"true");
 }
-
 double ParseNumberW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev) {
     std::wstring szValue; szValue += chPrev;
     while (pBuffer++ < pBufferMax) {
 
-        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
+        if (pBuffer[0] == ' ' || pBuffer[0] == ',' || pBuffer[0] == '\n' || pBuffer[0] == '\r' || pBuffer[0] == ';' || pBuffer[0] == ']' || pBuffer[0] == '}') break;
 
         szValue += pBuffer[0];
 
