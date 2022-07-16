@@ -132,6 +132,7 @@ JsonValueW ParseJsonValueW(wchar_t*& pBuffer, const wchar_t* pBufferMax, const s
         case '7':
         case '8':
         case '9':
+        case 'i':
             pValue.m_dbValue = ParseNumberW(pBuffer, pBufferMax, pBuffer[0]);
             pValue.m_tType = VALUE_TYPE::NUMBER;
             return pValue;
@@ -170,6 +171,7 @@ double ParseNumberW(wchar_t*& pBuffer, const wchar_t* pBufferMax, wchar_t chPrev
         szValue += pBuffer[0];
 
     }
+    if (chPrev == 'i') return INFINITY;
     return wcstod(szValue.c_str(), 0);
 }
 

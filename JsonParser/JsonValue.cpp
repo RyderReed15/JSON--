@@ -163,7 +163,9 @@ std::ostream& operator<< (std::ostream& out, const JsonValue& rhs) {
         out << "\"" << rhs.m_szName << "\": " << (rhs.m_bValue ? "true" : "false");
         break;
     case VALUE_TYPE::NUMBER:
-        out << "\"" << rhs.m_szName << "\": " << std::setprecision(DOUBLE_PRECISION) << rhs.m_dbValue;
+        //storing a float in a double will fill all but the last 7 nibbles (3.5 bytes) leaving them zeros
+        //ensures we store .3 instead of .30000001
+        out << "\"" << rhs.m_szName << "\": " << std::setprecision(*((long*)&rhs.m_dbValue) << 4 != 0 ? DOUBLE_PRECISION : SINGLE_PRECISION) << rhs.m_dbValue;
         break;
     case VALUE_TYPE::STRING:
         for (size_t i = 0; i < rhs.m_szValue.size(); i++) {

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <math.h>
 
+#define SINGLE_PRECISION 7
 #define DOUBLE_PRECISION 15
 
 class JsonObjectW;

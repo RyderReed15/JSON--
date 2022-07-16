@@ -119,6 +119,7 @@ JsonValue ParseJsonValue(char*& pBuffer, const char* pBufferMax, const std::stri
         case '7':
         case '8':
         case '9':
+        case 'i':
             pValue.m_dbValue = ParseNumber(pBuffer, pBufferMax, pBuffer[0]);
             pValue.m_tType = VALUE_TYPE::NUMBER;
             return pValue;
@@ -159,6 +160,7 @@ double ParseNumber(char*& pBuffer, const char* pBufferMax, char chPrev) {
         szValue += pBuffer[0];
 
     }
+    if (chPrev == 'i') return INFINITY;
     return strtod(szValue.c_str(), 0);
 }
 
@@ -446,8 +448,6 @@ void BufferGetLine(char*& pBuffer, const char* pBufferMax, std::string& szLine, 
     }
     szLine = szTemp;
 }
-
-
 
 
 
