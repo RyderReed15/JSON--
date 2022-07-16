@@ -174,10 +174,9 @@ size_t JsonArrayW::AddJsonArray(JsonArrayW* pArray, size_t index) {
 
 void JsonArrayW::RemoveValue(size_t index) {
     if (index < m_vValues.size()) {
+        m_vValues[index].DeepDelete();
         m_vValues.erase(m_vValues.begin() + static_cast<std::vector<JsonValueW>::difference_type>(index));
-
     }
-
 }
 
 size_t JsonArrayW::GetSize() {
@@ -190,7 +189,11 @@ JsonArrayW JsonArrayW::operator= (const JsonArrayW& rhs) {
     }
     m_szName = L"";
 
+    for (size_t i = 0; i < m_vValues.size(); i++) {
+        m_vValues[i].DeepDelete();
+    }
     m_vValues.clear();
+
     for (size_t i = 0; i < rhs.m_vValues.size(); i++) {
         m_vValues.push_back(rhs.m_vValues[i]);
     }

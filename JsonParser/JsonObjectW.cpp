@@ -18,7 +18,7 @@ JsonObjectW::~JsonObjectW() {
     for (size_t i = 0; i < m_vValues.size(); i++) {
         m_vValues[i].DeepDelete();
     }
-
+    m_vValues.clear();
     m_mValues.clear();
     m_szName.clear();
 
@@ -169,8 +169,9 @@ bool JsonObjectW::AddJsonArray(const std::wstring& szName, JsonArrayW* pArray) {
 }
 
 void JsonObjectW::RemoveValue(const std::wstring& szName) {
+    m_vValues[m_mValues[szName]].DeepDelete();
+    m_vValues.erase(m_vValues.begin() + static_cast<std::vector<JsonValueW>::difference_type>(m_mValues[szName]));
     m_mValues.erase(szName);
-
 }
 
 JsonObjectW JsonObjectW::operator=(JsonObjectW& rhs) {
@@ -178,8 +179,12 @@ JsonObjectW JsonObjectW::operator=(JsonObjectW& rhs) {
         return *this;
     }
 
+    for (size_t i = 0; i < m_vValues.size(); i++) {
+        m_vValues[i].DeepDelete();
+    }
     m_vValues.clear();
     m_mValues.clear();
+
     for (size_t i = 0; i < rhs.m_vValues.size(); i++) {
         m_mValues[m_vValues[i].m_szName] = m_vValues.size();
         m_vValues.push_back(rhs.m_vValues[i]);

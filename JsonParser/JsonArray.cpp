@@ -174,8 +174,8 @@ size_t JsonArray::AddJsonArray(JsonArray* pArray, size_t index) {
 
 void JsonArray::RemoveValue(size_t index) {
     if (index < m_vValues.size()) {
+        m_vValues[index].DeepDelete();
         m_vValues.erase(m_vValues.begin() + static_cast<std::vector<JsonValue>::difference_type>(index));
-
     }
 
 }
@@ -190,7 +190,11 @@ JsonArray JsonArray::operator= (const JsonArray& rhs) {
     }
     m_szName = "";
 
+    for (size_t i = 0; i < m_vValues.size(); i++) {
+        m_vValues[i].DeepDelete();
+    }
     m_vValues.clear();
+
     for (size_t i = 0; i < rhs.m_vValues.size(); i++) {
         m_vValues.push_back(rhs.m_vValues[i]);
     }
