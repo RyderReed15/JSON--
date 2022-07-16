@@ -215,18 +215,29 @@ JsonObject* ParseJsonObject(char*& pBuffer, const char* pBufferMax) {
             if (pObject->m_mValues.count(line) && (pValue.m_tType == VALUE_TYPE::OBJECT || pValue.m_tType == VALUE_TYPE::ARRAY)) {
                 if (pValue.m_tType == VALUE_TYPE::OBJECT) {
                     JsonObject* pNewObject = pValue.m_pObject;
+                    JsonObject* pOldObject = pObject->m_vValues[pObject->m_mValues[line]].m_pObject;
+
                     for (size_t i = 0; i < pNewObject->m_vValues.size(); i++) {
-                        JsonObject* pOldObject = pObject->m_vValues[pObject->m_mValues[line]].m_pObject;
+
                         pOldObject->m_mValues[pNewObject->m_vValues[i].m_szName] = pOldObject->m_vValues.size();
                         pOldObject->m_vValues.push_back(pNewObject->m_vValues[i]);
                     }
+                    //Clear values then delete old value to prevent leaks
+                    pValue.m_pObject->m_vValues.clear();
+                    pValue.m_pObject->m_mValues.clear();
+                    pValue.DeepDelete();
                 }
                 else {
                     JsonArray* pNewArray = pValue.m_pArray;
+                    JsonArray* pOldArray = pObject->m_vValues[pObject->m_mValues[line]].m_pArray;
+
                     for (size_t i = 0; i < pNewArray->m_vValues.size(); i++) {
-                        JsonArray* pOldArray = pObject->m_vValues[pObject->m_mValues[line]].m_pArray;
+
                         pOldArray->m_vValues.push_back(pNewArray->m_vValues[i]);
                     }
+                    //Clear values then delete old value to prevent leaks
+                    pValue.m_pArray->m_vValues.clear();
+                    pValue.DeepDelete();
                 }
             }
             else if (!pValue.m_szName.compare("")) {
@@ -448,7 +459,4 @@ void BufferGetLine(char*& pBuffer, const char* pBufferMax, std::string& szLine, 
     }
     szLine = szTemp;
 }
-
-
-
 
