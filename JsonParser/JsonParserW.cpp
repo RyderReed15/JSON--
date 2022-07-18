@@ -25,8 +25,12 @@ JsonObjectW* ParseJsonFileW(const char* szPath) {
 
             if (pBuffer[0] == 0xFFFE) {
                 _swab((char*)pBuffer, (char*)pBuffer, size * 2);
+                pBuffer++; size--;
             }
-            pBuffer++; size--;
+            else if (pBuffer[0] == 0xFEFF) {
+                pBuffer++; size--;
+            }
+            
             return ParseBufferW(pBuffer, pOrigBuffer + size);
             
         }
@@ -44,7 +48,11 @@ JsonObjectW* ParseJsonStringW(const std::wstring& szJson) {
         unsigned int size = szJson.length();
         if (size) {
             wchar_t* pBuffer = (wchar_t*)szJson.c_str();
-            if (pBuffer[0] == 0xFEFF) {
+            if (pBuffer[0] == 0xFFFE) {
+                _swab((char*)pBuffer, (char*)pBuffer, size * 2);
+                pBuffer++; size--;
+            }
+            else if (pBuffer[0] == 0xFEFF) {
                 pBuffer++; size--;
             }
             return ParseBufferW(pBuffer, pBuffer + size);
@@ -305,6 +313,7 @@ bool WriteJsonFileW(const char* szPath, JsonObjectW* pJsonObject) {
     std::wofstream fJson;
     fJson.open(szPath);
     if (fJson.is_open()) {
+        fJson << 0xFEFF;
         return WriteJsonObjectW(fJson, pJsonObject);
     }
     return false;
@@ -312,6 +321,7 @@ bool WriteJsonFileW(const char* szPath, JsonObjectW* pJsonObject) {
 
 std::wstring WriteJsonStringW(JsonObjectW* pJsonObject) {
     std::wostringstream sJson;
+    sJson << 0xFEFF;
     WriteJsonObjectW(sJson, pJsonObject);
     return sJson.str();
 }

@@ -19,30 +19,31 @@ public:
                 JsonObject      (JsonObject& copyObject);
                 ~JsonObject     (void);
 
-    bool        GetBoolean      (const std::string& szName);
+    bool        GetBoolean      (const std::string& szName) const;
     bool        SetBoolean      (const std::string& szName, const bool bValue);
     bool        AddBoolean      (const std::string& szName, const bool bValue);
 
     template <typename T>
-    T           GetNumber       (const std::string& szName);
+    T           GetNumber       (const std::string& szName) const;
     bool        SetNumber       (const std::string& szName, const double num);
     bool        AddNumber       (const std::string& szName, const double num);
 
-    std::string GetString       (const std::string& szName);
+    std::string GetString       (const std::string& szName) const;
     bool        SetString       (const std::string& szName, const std::string& szValue);
     bool        AddString       (const std::string& szName, const std::string& szValue);
 
-    JsonObject* GetJsonObject   (const std::string& szName);
+    JsonObject* GetJsonObject   (const std::string& szName) const;
     bool        SetJsonObject   (const std::string& szName, JsonObject* pObject);
     bool        AddJsonObject   (const std::string& szName, JsonObject* pObject);
 
-    JsonArray*  GetJsonArray    (const std::string& szName);
-    bool        SetJsonArray(const std::string& szName, JsonArray* pArray);
-    bool        AddJsonArray(const std::string& szName, JsonArray* pArray);
+    JsonArray*  GetJsonArray    (const std::string& szName) const;
+    bool        SetJsonArray    (const std::string& szName, JsonArray* pArray);
+    bool        AddJsonArray    (const std::string& szName, JsonArray* pArray);
 
     void        RemoveValue     (const std::string& szName);
 
     JsonObject  operator=       (JsonObject& rhs);
+    JsonValue&  operator[]      (const std::string& szName);
 
     std::vector<JsonValue>                  m_vValues;
     std::unordered_map<std::string, size_t> m_mValues;
@@ -54,9 +55,9 @@ public:
 #include "JsonArray.h"
 
 template <typename T>
-T JsonObject::GetNumber(const std::string& szName) {
+T JsonObject::GetNumber(const std::string& szName) const {
     if (!m_mValues.count(szName)) return (T)0;
-    JsonValue pValue = m_vValues[m_mValues[szName]];
+    JsonValue pValue = m_vValues.at(m_mValues.at(szName));
     if (pValue.m_tType == VALUE_TYPE::NUMBER) {
         return (T)m_vValues[m_mValues[szName]].m_dbValue;;
     }

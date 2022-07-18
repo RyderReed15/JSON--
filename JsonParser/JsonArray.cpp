@@ -180,7 +180,7 @@ void JsonArray::RemoveValue(size_t index) {
 
 }
 
-size_t JsonArray::GetSize() {
+size_t JsonArray::GetSize() const {
     return m_vValues.size();
 }
 

@@ -45,9 +45,9 @@ bool JsonObjectW::AddNumber(const std::wstring& szName, const double num) {
     return pValue.m_tType != VALUE_TYPE::INVALID;
 }
 
-bool JsonObjectW::GetBoolean(const std::wstring& szName) {
+bool JsonObjectW::GetBoolean(const std::wstring& szName) const {
     if (!m_mValues.count(szName)) return false;
-    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValueW* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::BOOL) {
         return pValue->m_bValue;
     }
@@ -75,9 +75,9 @@ bool JsonObjectW::AddBoolean(const std::wstring& szName, const bool bValue) {
    
 }
 
-std::wstring JsonObjectW::GetString(const std::wstring& szName) {
+std::wstring JsonObjectW::GetString(const std::wstring& szName) const {
     if (!m_mValues.count(szName)) return L"";
-    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValueW* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::STRING) {
         return pValue->m_szValue;
     }
@@ -104,9 +104,9 @@ bool JsonObjectW::AddString(const std::wstring& szName, const std::wstring& szVa
     
 }
 
-JsonObjectW* JsonObjectW::GetJsonObject(const std::wstring& szName) {
+JsonObjectW* JsonObjectW::GetJsonObject(const std::wstring& szName) const {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValueW* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::OBJECT) {
         return pValue->m_pObject;
     }
@@ -135,9 +135,9 @@ bool JsonObjectW::AddJsonObject(const std::wstring& szName, JsonObjectW* pObject
     
 }
 
-JsonArrayW* JsonObjectW::GetJsonArray(const std::wstring& szName) {
+JsonArrayW* JsonObjectW::GetJsonArray(const std::wstring& szName) const {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValueW* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValueW* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::ARRAY) {
 
         return pValue->m_pArray;
@@ -190,4 +190,8 @@ JsonObjectW JsonObjectW::operator=(JsonObjectW& rhs) {
         m_vValues.push_back(rhs.m_vValues[i]);
     }
     return *this;
+}
+
+JsonValueW& JsonObjectW::operator[](const std::wstring& szName) {
+    return m_vValues[m_mValues[szName]];
 }

@@ -179,7 +179,7 @@ void JsonArrayW::RemoveValue(size_t index) {
     }
 }
 
-size_t JsonArrayW::GetSize() {
+size_t JsonArrayW::GetSize() const {
     return m_vValues.size();
 }
 

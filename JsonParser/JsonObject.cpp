@@ -45,9 +45,9 @@ bool JsonObject::AddNumber(const std::string& szName, const double num) {
     return pValue.m_tType != VALUE_TYPE::INVALID;
 }
 
-bool JsonObject::GetBoolean(const std::string& szName) {
+bool JsonObject::GetBoolean(const std::string& szName) const {
     if (!m_mValues.count(szName)) return false;
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValue* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::BOOL) {
         return pValue->m_bValue;
     }
@@ -75,9 +75,9 @@ bool JsonObject::AddBoolean(const std::string& szName, const bool bValue) {
    
 }
 
-std::string JsonObject::GetString(const std::string& szName) {
+std::string JsonObject::GetString(const std::string& szName) const {
     if (!m_mValues.count(szName)) return "";
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValue* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::STRING) {
         return pValue->m_szValue;
     }
@@ -104,9 +104,9 @@ bool JsonObject::AddString(const std::string& szName, const std::string& szValue
     
 }
 
-JsonObject* JsonObject::GetJsonObject(const std::string& szName) {
+JsonObject* JsonObject::GetJsonObject(const std::string& szName) const {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValue* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::OBJECT) {
         return pValue->m_pObject;
     }
@@ -135,9 +135,9 @@ bool JsonObject::AddJsonObject(const std::string& szName, JsonObject* pObject) {
     
 }
 
-JsonArray* JsonObject::GetJsonArray(const std::string& szName) {
+JsonArray* JsonObject::GetJsonArray(const std::string& szName) const {
     if (!m_mValues.count(szName)) return nullptr;
-    JsonValue* pValue = &m_vValues[m_mValues[szName]];
+    const JsonValue* pValue = &m_vValues.at(m_mValues.at(szName));
     if (pValue->m_tType == VALUE_TYPE::ARRAY) {
 
         return pValue->m_pArray;
@@ -191,4 +191,8 @@ JsonObject JsonObject::operator=(JsonObject& rhs) {
         m_vValues.push_back(rhs.m_vValues[i]);
     }
     return *this;
+}
+
+JsonValue& JsonObject::operator[](const std::string& szName) {
+    return m_vValues.at(m_mValues.at(szName));
 }

@@ -20,44 +20,43 @@ public:
                 ~JsonArray          (void);
 
     //Getters and setters for Boolean Values - Get by index in array
-    bool        GetBoolean          (size_t index) const;
-    bool        SetBoolean          (size_t index, const bool bValue);
-    size_t      AddBoolean          (bool bValue, size_t index = -1);
+    bool        GetBoolean          (const size_t index) const;
+    bool        SetBoolean          (const size_t index, const bool bValue);
+    size_t      AddBoolean          (bool bValue, const size_t index = -1);
 
     //Getters and setters for Number Values - Get by index in array
     template <typename T>
-    T           GetNumber           (size_t index) const;
-    bool        SetNumber           (size_t index, const double num);
-    size_t      AddNumber           (const double num, size_t index = -1);
+    T           GetNumber           (const size_t index) const;
+    bool        SetNumber           (const size_t index, const double num);
+    size_t      AddNumber           (const double num, const size_t index = -1);
 
     //Getters and setters for String Values - Get by index in array
-    std::string GetString           (size_t index) const;
-    bool        SetString           (size_t index, const std::string& szValue);
-    size_t      AddString           (const std::string& szValue, size_t index = -1);
+    std::string GetString           (const size_t index) const;
+    bool        SetString           (const size_t index, const std::string& szValue);
+    size_t      AddString           (const std::string& szValue, const size_t index = -1);
 
     //Getters and setters for JsonObject Values - Get by index in array
-    JsonObject* GetJsonObject       (size_t index) const;
-    bool        SetJsonObject       (size_t index, JsonObject* pObject);
-    size_t      AddJsonObject       (JsonObject* pObject, size_t index = -1);
+    JsonObject* GetJsonObject       (const size_t index) const;
+    bool        SetJsonObject       (const size_t index, JsonObject* pObject);
+    size_t      AddJsonObject       (JsonObject* pObject, const size_t index = -1);
 
     //Finds a json object with a specific value and returns it
     template <typename T>
     JsonObject* GetJsonObjectByValue(const std::string& szValueName, T tValue) const;
 
     //Getters and setters for JsonArray Values - Get by index in array
-    JsonArray*  GetJsonArray        (size_t index) const;
-    bool        SetJsonArray        (size_t index, JsonArray* pArray);
-    size_t      AddJsonArray        (JsonArray* pArray, size_t index = -1);
+    JsonArray*  GetJsonArray        (const size_t index) const;
+    bool        SetJsonArray        (const size_t index, JsonArray* pArray);
+    size_t      AddJsonArray        (JsonArray* pArray, const size_t index = -1);
 
     //removes a value from the array
-    void        RemoveValue         (size_t index);
+    void        RemoveValue         (const size_t index);
 
     //Returns size of the array
-    size_t      GetSize             (void);
+    size_t      GetSize             (void) const;
 
     JsonArray   operator=           (const JsonArray& rhs);
-
-    JsonValue&  operator[]          (size_t index);
+    JsonValue&  operator[]          (const size_t index);
 
 
     std::vector<JsonValue>  m_vValues;
