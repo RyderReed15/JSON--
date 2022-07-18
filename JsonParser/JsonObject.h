@@ -59,7 +59,7 @@ T JsonObject::GetNumber(const std::string& szName) const {
     if (!m_mValues.count(szName)) return (T)0;
     JsonValue pValue = m_vValues.at(m_mValues.at(szName));
     if (pValue.m_tType == VALUE_TYPE::NUMBER) {
-        return (T)m_vValues[m_mValues[szName]].m_dbValue;;
+        return (T)m_vValues.at(m_mValues.at(szName)).m_dbValue;
     }
     return 0;
 }
