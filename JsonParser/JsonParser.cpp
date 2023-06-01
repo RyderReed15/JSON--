@@ -84,7 +84,7 @@ JsonValue ParseJsonValue(char*& pBuffer, const char* pBufferMax, const std::stri
             pValue.m_tType = VALUE_TYPE::STRING;
             return pValue;
         case '[':
-
+            pBuffer--;
             pValue.m_pArray = ParseJsonArray(pBuffer, pBufferMax, szName);
             pValue.m_tType = VALUE_TYPE::ARRAY;
             return pValue;
@@ -188,7 +188,7 @@ JsonArray* ParseJsonArray(char*& pBuffer, const char* pBufferMax, const std::str
         if (pValue.m_tType == VALUE_TYPE::INVALID) return pArray;
         pArray->m_vValues.push_back(pValue);
         if (pValue.m_tType == VALUE_TYPE::NUMBER || pValue.m_tType == VALUE_TYPE::BOOL) {
-            pBuffer--;
+           
 
             if (pBuffer[0] == ']') return pArray;
         }
