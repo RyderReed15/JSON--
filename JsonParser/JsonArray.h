@@ -26,7 +26,7 @@ public:
 
     //Getters and setters for Number Values - Get by index in array
     template <typename T>
-    T           GetNumber           (const size_t index) const;
+    T           GetNumber           (const size_t index);
     bool        SetNumber           (const size_t index, const double num);
     size_t      AddNumber           (const double num, const size_t index = -1);
 
@@ -42,7 +42,7 @@ public:
 
     //Finds a json object with a specific value and returns it
     template <typename T>
-    JsonObject* GetJsonObjectByValue(const std::string& szValueName, T tValue) const;
+    JsonObject* GetJsonObjectByValue(const std::string& szValueName, T tValue);
 
     //Getters and setters for JsonArray Values - Get by index in array
     JsonArray*  GetJsonArray        (const size_t index) const;
@@ -58,6 +58,8 @@ public:
     JsonArray   operator=           (const JsonArray& rhs);
     JsonValue&  operator[]          (const size_t index);
 
+    JsonValue* GetValueByString(const std::string& szString);
+
 
     std::vector<JsonValue>  m_vValues;
     std::string             m_szName;
@@ -67,7 +69,7 @@ public:
 #include "JsonObject.h"
 
 template <typename T>
-T JsonArray::GetNumber(size_t index) const {
+T JsonArray::GetNumber(size_t index) {
     if (index >= 0 && index < m_vValues.size()) {
         JsonValue* pValue = &m_vValues[index];
         if (pValue->m_tType == VALUE_TYPE::NUMBER) {
@@ -79,7 +81,7 @@ T JsonArray::GetNumber(size_t index) const {
 }
 
 template <typename T>
-JsonObject* JsonArray::GetJsonObjectByValue(const std::string& szValueName, T tValue) const {
+JsonObject* JsonArray::GetJsonObjectByValue(const std::string& szValueName, T tValue) {
     for (int i = 0; i < m_vValues.size(); i++) {
         if (m_vValues[i].m_tType == VALUE_TYPE::OBJECT) {
             JsonObject* pObject = m_vValues[i].m_pObject;

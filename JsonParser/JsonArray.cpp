@@ -205,3 +205,54 @@ JsonValue& JsonArray::operator[](size_t index) {
 
     return m_vValues[index];
 }
+
+JsonValue* JsonArray::GetValueByString(const std::string& szString) {
+    std::string szObj;
+    std::istringstream sStream(szString);
+    JsonValue* pValue = nullptr;
+
+    while (!sStream.eof() && sStream.good()) {
+        std::getline(sStream, szObj, '.');
+
+        if (szObj[szObj.size() - 1] == ']') {
+            std::istringstream sTemp(szObj);
+            std::string szArray, szId;
+            std::getline(sTemp, szArray, '[');
+            std::getline(sTemp, szId, ']');
+
+            int id = strtol(szId.c_str(), 0, 10);
+
+            std::cout << "Getting Array " << szArray << " with item " << id << std::endl;
+
+            if (pValue != nullptr) {
+                if (pValue->m_tType == VALUE_TYPE::OBJECT) {
+                    pValue = &pValue->m_pObject->m_vValues[pValue->m_pObject->m_mValues[szObj]];
+                    pValue = &pValue->m_pArray->m_vValues[id];
+                }
+                else {
+                    return nullptr;
+                }
+            }
+            else {
+                return nullptr;
+            }
+
+        }
+        else {
+            if (pValue != nullptr) {
+                if (pValue->m_tType == VALUE_TYPE::OBJECT) {
+                    pValue = &pValue->m_pObject->m_vValues[pValue->m_pObject->m_mValues[szObj]];
+                }
+                else {
+                    return nullptr;
+                }
+            }
+            else {
+                return nullptr;
+            }
+        }
+    }
+
+    return pValue;
+    
+}

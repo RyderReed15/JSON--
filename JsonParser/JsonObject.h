@@ -24,7 +24,7 @@ public:
     bool        AddBoolean      (const std::string& szName, const bool bValue);
 
     template <typename T>
-    T           GetNumber       (const std::string& szName) const;
+    T           GetNumber       (const std::string& szName);
     bool        SetNumber       (const std::string& szName, const double num);
     bool        AddNumber       (const std::string& szName, const double num);
 
@@ -55,7 +55,7 @@ public:
 #include "JsonArray.h"
 
 template <typename T>
-T JsonObject::GetNumber(const std::string& szName) const {
+T JsonObject::GetNumber(const std::string& szName) {
     if (!m_mValues.count(szName)) return (T)0;
     JsonValue pValue = m_vValues.at(m_mValues.at(szName));
     if (pValue.m_tType == VALUE_TYPE::NUMBER) {

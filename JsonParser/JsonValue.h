@@ -2,6 +2,7 @@
 #ifndef JSON_VALUE_H
 #define JSON_VALUE_H
 #include <string>
+#include <sstream>
 #include <iomanip>
 #include <iostream>
 #include <math.h>

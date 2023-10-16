@@ -183,14 +183,18 @@ JsonArray* ParseJsonArray(char*& pBuffer, const char* pBufferMax, const std::str
     JsonArray* pArray = new JsonArray();
     pArray->m_szName = szName;
     while (pBuffer++ < pBufferMax) {
-
         JsonValue pValue = ParseJsonValue(pBuffer, pBufferMax, "");
         if (pValue.m_tType == VALUE_TYPE::INVALID) return pArray;
         pArray->m_vValues.push_back(pValue);
         if (pValue.m_tType == VALUE_TYPE::NUMBER || pValue.m_tType == VALUE_TYPE::BOOL) {
-           
 
             if (pBuffer[0] == ']') return pArray;
+            pBuffer--;
+        }
+        else {
+            pBuffer++;
+            if (pBuffer[0] == ']') return pArray;
+            pBuffer--;
         }
     }
     return pArray;
